@@ -21,9 +21,8 @@
 6. Right click unsecure 
    - Run As Spring Boot App
 
-<a name="frontend"/>
 ## To Run Front-End Angular Project:
-
+<a name="frontend"/>
 1. Make sure you have pulled code from GitHub
 2. Download Angular CLI: https://cli.angular.io
 3. Open terminal (or another command line interface) and navigate to 'bank' directory
