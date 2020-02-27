@@ -1,8 +1,5 @@
 # 467-security-project
 
-## Table of Contents  
-[Run Frontend](#frontend)  
-
 ## To Run Back-End Server:
 
 1. Pull code from GitHub
@@ -20,8 +17,6 @@
    - Restart Eclipse
 6. Right click unsecure 
    - Run As Spring Boot App
-
-<a name="frontend"/>
 
 ## To Run Front-End Angular Project:
 
