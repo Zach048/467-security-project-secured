@@ -41,6 +41,14 @@
 
 ### Cross Scripting Attack  
 
+##### Angular Dom Sanitization   
+
+##### Bypassing Dom Sanitizer   
+
+##### Parameterized XSS Attack  
+
+##### XSS Attack By Updating Customer  
+
 <a name="injection-attack"/>
 
 ### SQL Code Injection
