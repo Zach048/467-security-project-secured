@@ -1,0 +1,70 @@
+package com.osu.capstone.project.unsecure.record;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "transactions")
+public class TransactionsRecord {
+	
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private Integer transactionId;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private AccountRecord account;
+	@Column(name = "vendor_name")
+	private String vendorName;
+	@Column(name = "amount_paid")
+	private Double amountPaid;
+	
+	public TransactionsRecord() {}
+
+	public TransactionsRecord(Integer transactionId, AccountRecord account, String vendorName, Double amountPaid) {
+		this.transactionId = transactionId;
+		this.account = account;
+		this.vendorName = vendorName;
+		this.amountPaid = amountPaid;
+	}
+
+	public Integer getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(Integer transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public AccountRecord getAccount() {
+		return account;
+	}
+
+	public void setAccount(AccountRecord account) {
+		this.account = account;
+	}
+
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+
+	public Double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(Double amountPaid) {
+		this.amountPaid = amountPaid;
+	};
+	
+	
+
+}
