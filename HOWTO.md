@@ -43,6 +43,8 @@
 
 ### Injection
 
+An attacker may be able to manipulate a web application such that the submitted commands (to include the request and payload) are altered in order to steal secretive information, change data, or potentially erase traces of activity.
+
 [OWASP Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection.html)
 
 <a name="broken-auth"/>
@@ -93,10 +95,11 @@
 
 ### Introduction to OWASP ZAP  
 
-<a name="results"/>
+The Open Web Application Security Project (OWASP) is a nonprofit working to advance the security of software through community-driven open source development.  Zed Attack Proxy (ZAP) is a tool created by OWASP to perform security testing in a manner that can be understood by individuals ranging in experience from novice to expert.  ZAP is a penetration testing tool specifically designed for web applications and functions primarily as a "man-in-the-middle proxy" by intercepting and monitoring data transmitted between the browser and web application.  The tool should only be run on sites that you have permission to attack as the simulation functions like a real attack and has the potential to damage the appication's functionality, data, etc.
 
-[Download OWASP ZAP](https://www.zaproxy.org/download/)  
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
+
+<a name="results"/>
 
 ### OWASP Zap Scanning Results
 
