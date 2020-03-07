@@ -5,19 +5,19 @@
 
 ##### I. Defining Security Vulnerabilities
 
-[Injection](#injection)
-[Broken Authentication](#broken-auth)
-[Sensitive Data Exposure](#sensitive)
-[Broken Access Control](#broken-access)
-[Security Misconfiguration](#misconfig)
-[Cross-Site Scripting (XSS)](#xss)
-[Using Components With Known Vulnerabilities](#known-vulnerabilities)
+[Injection](#injection)  
+[Broken Authentication](#broken-auth)  
+[Sensitive Data Exposure](#sensitive)  
+[Broken Access Control](#broken-access)  
+[Security Misconfiguration](#misconfig)  
+[Cross-Site Scripting (XSS)](#xss)  
+[Using Components With Known Vulnerabilities](#known-vulnerabilities)  
 [Insufficient Logging and Monitoring](#logging)
 
 ##### II. Scanning For Security Vulnerabilities
 
-[Introduction to OWASP ZAP](#zap)   
-[Results](#results)  
+[Introduction to OWASP ZAP](#zap)  
+[Results](#results)
 
 ##### III. Security Vulnerability Exploit Attacks   
 
@@ -28,7 +28,7 @@
 
 ##### IV. Security Vulnerability Mitigations  
 
-[Cross Scripting Attack](#xss-mit)  
+[Cross Scripting Attack](#xss-mit)
 [SQL Code Injection](#injection-mit)  
 [Broken Authentication](#encryption-mit)  
 [Broken Access Control](#access-mit)  
