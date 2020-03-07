@@ -117,11 +117,32 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### OWASP Zap Scanning Results
 
+
 ## Security Vulnerability Exploit Attacks
+
+<a name="injection-attack"/>
+
+### SQL Code Injection
+
+<a name="passwords-attack"/>
+
+### Broken Authentication 
+
+<a name="dataexp-mit"/>
+
+### Sensitive Data Exposure
+
+<a name="access-attack"/>
+
+### Broken Access Control
+
+<a name="misconfig-mit"/>
+
+### Security Misconfiguration  
 
 <a name="xss-attack"/>
 
-### Cross Scripting Attack  
+### Cross Scripting Attack   
 
 ##### Angular Dom Sanitization   
 
@@ -131,23 +152,7 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ##### XSS Attack By Updating Customer  
 
-<a name="injection-attack"/>
-
-### SQL Code Injection
-
-<a name="passwords-attack"/>
-
-### Broken Authentication  
-
-<a name="access-attack"/>
-
-### Broken Access Control
-
 ## Security Vulnerabilty Mitigations 
-
-<a name="xss-mit"/>
-
-### Cross Scripting Attack  
 
 <a name="injection-mit"/>
 
@@ -161,18 +166,14 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### Broken Access Control
 
-<a name="logging-mit"/>
+<a name="xss-mit"/>
 
-### Logging 
-
-<a name="dataexp-mit"/>
-
-### Sensitive Data Exposure
-
-<a name="misconfig-mit"/>
-
-### Security Misconfiguration  
+### Cross Scripting Attack  
 
 <a name="outdated-mit"/>
 
 ### Using Components with Known Vulnerabilities
+
+<a name="logging-mit"/>
+
+### Logging 
