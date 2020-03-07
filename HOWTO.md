@@ -3,27 +3,87 @@
 
 ## Table of Contents 
 
-##### I. Scanning For Security Vulnerabilities 
+##### I. Defining Security Vulnerabilities
+[Injection](#injection)
+[Broken Authentication](#broken-auth)
+[Sensitive Data Exposure](#sensitive)
+[Broken Access Control](#broken-access)
+[Security Misconfiguration](#misconfig)
+[Cross-Site Scripting (XSS)](#xss)
+[Using Components With Known Vulnerabilities](#known-vulnerabilities)
+[Insufficient Logging and Monitoring](#logging)
+
+##### II. Scanning For Security Vulnerabilities 
 [Introduction to OWASP ZAP](#zap)   
 [Results](#results)  
 
-##### II. Security Vulnerability Exploit Attacks   
+##### III. Security Vulnerability Exploit Attacks   
 
 [Cross Scripting Attack](#xss-attack)  
 [SQL Code Injection](#injection-attack)  
-[Broken Authentication](#crack-passwords)  
+[Broken Authentication](#passwords-attack)  
 [Broken Access Control](#access-attack)  
 
-##### III. Security Vulnerability Mitigations  
+##### IV. Security Vulnerability Mitigations  
 
 [Cross Scripting Attack](#xss-mit)  
 [SQL Code Injection](#injection-mit)  
-[Broken Authentication](#encryption)  
+[Broken Authentication](#encryption-mit)  
 [Broken Access Control](#access-mit)  
-[Logging](#logging)  
-[Security Misconfiguration](#misconfig)  
-[Sensitive Data Exposure](#dataexp)  
-[Using Components with Known Vulnerabilities](#outdated)
+[Logging](#logging-mit)  
+[Security Misconfiguration](#misconfig-mit)  
+[Sensitive Data Exposure](#dataexp-mit)  
+[Using Components with Known Vulnerabilities](#outdated-mit)
+
+## Defining Security Vulnerabilites
+
+<a name="injection"/>
+
+### Injection
+
+[OWASP Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection.html)
+
+<a name="broken-auth"/>
+
+### Broken Authentication
+
+[OWASP Broken Authentication](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A2-Broken_Authentication.html)
+
+<a name="sensitive"/>
+
+### Sensitive Data Exposure
+
+[OWASP Sensitive Data Exposure](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure.html)
+
+<a name="broken-access"/>
+
+### Broken Access Control
+
+[OWASP Broken Access Control](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A5-Broken_Access_Control.html)
+
+<a name="misconfig"/>
+
+### Security Misconfiguration
+
+[OWASP Security Misconfiguration](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A6-Security_Misconfiguration.html)
+
+<a name="xss"/>
+
+### Cross-Site Scripting (XSS)
+
+[OWASP Cross-Site Scripting](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A7-Cross-Site_Scripting_(XSS).html)
+
+<a name="known-vulnerabilities"/>
+
+### Using Components With Known Vulnerabilities
+
+[OWASP Using Components With Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)
+
+<a name="logging"/>
+
+### Insufficient Logging and Monitoring
+
+[OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
 
 ## Scanning For Security Vulnerabilities
 
@@ -34,6 +94,7 @@
 <a name="results"/>
 
 [Download OWASP ZAP](https://www.zaproxy.org/download/)
+
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
 
 ### OWASP Zap Scanning Results
@@ -56,19 +117,13 @@
 
 ### SQL Code Injection
 
-[OWASP Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection.html)
-
-<a name="crack-passwords"/>
+<a name="passwords-attack"/>
 
 ### Broken Authentication  
-
-[OWASP Broken Authentication](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A2-Broken_Authentication.html)
 
 <a name="access-attack"/>
 
 ### Broken Access Control
-
-[OWASP Broken Access Control](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A5-Broken_Access_Control.html)
 
 ## Security Vulnerabilty Mitigations 
 
@@ -80,7 +135,7 @@
 
 ### SQL Code Injection
 
-<a name="encryption"/>
+<a name="encryption-mit"/>
 
 ### Broken Authentication
 
@@ -88,28 +143,18 @@
 
 ### Broken Access Control
 
-<a name="logging"/>
+<a name="logging-mit"/>
 
 ### Logging 
 
-[OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
-
-<a name="dataexp"/>
+<a name="dataexp-mit"/>
 
 ### Sensitive Data Exposure
 
-[OWASP Sensitive Data Exposure](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure.html)
-
-<a name="misconfig"/>
+<a name="misconfig-mit"/>
 
 ### Security Misconfiguration  
 
-[OWASP Security Misconfiguration](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A6-Security_Misconfiguration.html)
-
-<a name="outdated"/>
+<a name="outdated-mit"/>
 
 ### Using Components with Known Vulnerabilities
-
-[OWASP Using Components With Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)
-
-
