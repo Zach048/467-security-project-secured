@@ -95,8 +95,7 @@
 
 <a name="results"/>
 
-[Download OWASP ZAP](https://www.zaproxy.org/download/)
-
+[Download OWASP ZAP](https://www.zaproxy.org/download/)  
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
 
 ### OWASP Zap Scanning Results
