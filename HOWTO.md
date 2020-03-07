@@ -4,6 +4,7 @@
 ## Table of Contents 
 
 ##### I. Defining Security Vulnerabilities
+
 [Injection](#injection)
 [Broken Authentication](#broken-auth)
 [Sensitive Data Exposure](#sensitive)
@@ -13,7 +14,8 @@
 [Using Components With Known Vulnerabilities](#known-vulnerabilities)
 [Insufficient Logging and Monitoring](#logging)
 
-##### II. Scanning For Security Vulnerabilities 
+##### II. Scanning For Security Vulnerabilities
+
 [Introduction to OWASP ZAP](#zap)   
 [Results](#results)  
 
