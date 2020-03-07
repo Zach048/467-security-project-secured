@@ -51,11 +51,15 @@ An attacker may be able to manipulate a web application such that the submitted 
 
 ### Broken Authentication
 
+Many applications will require a user to log in with a username and password combination, but attackers can utilize dictionary attacks, brute force, credential stuffing, session hijacking, and more to impersonate a user while the application cannot differentiate the attacker from the victim.
+
 [OWASP Broken Authentication](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A2-Broken_Authentication.html)
 
 <a name="sensitive"/>
 
 ### Sensitive Data Exposure
+
+Sensitive data should be protected using encryption or other cryptographic algorithms, but attackers can exploit unencrypted data, custom encryption schemes (opposed to proven algorithms), weak keys, exposed encryption keys, and improperly implemented protocols to steal information such as credit cards, passwords, personal information, and critical business data.
 
 [OWASP Sensitive Data Exposure](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure.html)
 
@@ -63,11 +67,15 @@ An attacker may be able to manipulate a web application such that the submitted 
 
 ### Broken Access Control
 
+Most web applications restrict what a user can see and do, but an attacker may find a way to bypass these controls to reach unauthorized data.
+
 [OWASP Broken Access Control](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A5-Broken_Access_Control.html)
 
 <a name="misconfig"/>
 
 ### Security Misconfiguration
+
+The application stack contains many moving components that need to be interconnected with proper configurations, and there is no single setting to protect the application, so all potentially vulnerable settings must be reviewed.
 
 [OWASP Security Misconfiguration](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A6-Security_Misconfiguration.html)
 
@@ -75,17 +83,23 @@ An attacker may be able to manipulate a web application such that the submitted 
 
 ### Cross-Site Scripting (XSS)
 
+An attacker can alter the the web pages that other users see when using the application, and the vulnerability can occur whenever unverified data is included in a web page response without proper validation and sanitization.
+
 [OWASP Cross-Site Scripting](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A7-Cross-Site_Scripting_(XSS).html)
 
 <a name="known-vulnerabilities"/>
 
 ### Using Components With Known Vulnerabilities
 
+Many web applications have multiple software dependencies, and if there are vulnerabilities within the dependencies then the same vulnerabilities also put the web application and its data at risk.
+
 [OWASP Using Components With Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)
 
 <a name="logging"/>
 
 ### Insufficient Logging and Monitoring
+
+Some attacks may penetrate even the best security defenses, but a proper security system will have many layers that provide the organization ample ability to recover against the attack or minimize damage.
 
 [OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
 
