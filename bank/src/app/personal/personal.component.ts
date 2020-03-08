@@ -19,7 +19,8 @@ export class PersonalComponent implements OnInit {
     email: new FormControl('', Validators.email),
     phone: new FormControl(''),
     userName: new FormControl(''),
-    password: new FormControl('')
+    password: new FormControl(''),
+    newPassword: new FormControl('')
   });
 
   constructor(private _customerService: CustomerService, private _registrationService: RegistrationService, private router: Router) { }
@@ -28,10 +29,37 @@ export class PersonalComponent implements OnInit {
     this._customerService.getCustomer()
       .subscribe(data => this.customer = data);
   }
+ 
+  showPassword() {
+    let x : any = document.getElementById("pword");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  showNewPassword() {
+    let x : any = document.getElementById("newpword");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  showUsername() {
+    let x : any = document.getElementById("uname");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
 
   updateCustomer() {
-      for (let key in this.personalForm.value) {
-        this.customer[key] = this.personalForm.value[key];
+    for (let key in this.personalForm.value) {
+      this.customer[key] = this.personalForm.value[key];
     }
   }
 

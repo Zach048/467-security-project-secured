@@ -14,7 +14,7 @@
        <tr *ngFor="let transaction of transactions">
          <td scope="row">{{ transaction.transactionId }}</td>
          <td>{{ transaction.vendorName }}</td>
-         <td>{{ transaction.amountPaid | currency : 'USD' : true : '1.2-2'}}</td>
+         <td>{{ transaction.amountPaid | currency }}</td>
        </tr>
      </tbody>
    </table>

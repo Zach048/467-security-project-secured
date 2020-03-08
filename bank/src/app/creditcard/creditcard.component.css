@@ -1,0 +1,13 @@
+.dollar{
+	position: relative;
+	}
+.dollar input{
+   padding-left:15px;
+	}
+.dollar:before {
+	position: absolute;
+    content:"$";
+    padding: 0 5px;
+    padding-top: 7px;
+    text-align: center;
+    }

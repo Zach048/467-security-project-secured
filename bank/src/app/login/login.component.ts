@@ -45,18 +45,7 @@ export class LoginComponent implements OnInit {
         else{
           alert("Invalid username, password, or combination!")
         }
-      }
-        // response => console.log('Received username and password', response),
-        // error => console.error('Error receiving username and password', error)
-      )
-    /*
-    if(this.loginForm.value.username == "admin" && this.loginForm.value.password == "admin"){
-      this.router.navigate(['/dashboard']);
-    }
-    else{
-      alert("Invalid username, password, or combination!")
-    }
-    */
+      })
   }
 
 }

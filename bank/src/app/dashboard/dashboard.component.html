@@ -14,7 +14,7 @@
      <tbody>
        <tr>
          <td scope="row">{{ account.checkingAccount }}</td>
-         <td>{{ account.checkingBalance | currency : 'USD' : true : '1.2-2'}}</td>
+         <td>{{ account.checkingBalance | currency }}</td>
          <td> 
             <button routerLink="/transactions" type="button" class="btn btn-primary btn-rounded btn-sm my-0">View Transactions</button>
           </td>
@@ -30,9 +30,10 @@
     <tbody>
       <tr>
         <td scope="row">{{ account.creditCard }}</td>
-        <td>{{ account.creditCardBalance | currency : 'USD' : true : '1.2-2'}}</td>
+        <td>{{ account.creditCardBalance | currency }}</td>
         <td>
           <button routerLink="/credit" type="button" class="btn btn-primary btn-rounded btn-sm my-0">Pay Credit Card</button>
+          <!--<button mat-raised-button (click)="creditModal()">Pay Credit Card</button>-->
         </td>
       </tr>
     </tbody>

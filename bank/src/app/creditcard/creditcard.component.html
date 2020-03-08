@@ -1,28 +1,19 @@
 <app-navigation></app-navigation>
-<br>
-<br>
 <div class="container h-100">
   <div class="row h-100 justify-content-center align-items-center">
     <form class="col-6" [formGroup]="creditForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Checking Account</label>
-        <input type="text" [readonly]="editable" class="form-control" formControlName="checkingAccount" [(ngModel)]="account.checkingAccount">
-      </div>
-      <div class="form-group">
-        <label>Checking Account Balance</label>
-        <input type="text" [readonly]="editable" class="form-control" formControlName="checkingBalance" [(ngModel)]="account.checkingBalance">
-      </div>
-      <div class="form-group">
-        <label>Credit Card</label>
-        <input type="text" [readonly]="editable" class="form-control" formControlName="creditCard" [(ngModel)]="account.creditCard">
-      </div>
-      <div class="form-group">
-        <label>Credit Card Balance</label>
-        <input type="text" [readonly]="editable" class="form-control" formControlName="creditCardBalance" [(ngModel)]="account.creditCardBalance">
-      </div>
+      <ul class="list-group">
+        <li class="list-group-item">Checking Account: {{ account.checkingAccount }}</li>
+        <li class="list-group-item">Checking Account Balance: {{ account.checkingBalance | currency }}</li>        
+        <li class="list-group-item">Credit Card: {{ account.creditCard }}</li>
+        <li class="list-group-item">Credit Card Balance: {{ account.creditCardBalance | currency }}</li>
+      </ul>
+      <br>
       <div class="form-group">
         <label>Payment Amount</label>
-        <input type="number" class="form-control" formControlName="creditCardPayment" [(ngModel)]="creditForm.value.creditCardPayment" required>
+        <div class="dollar">
+        <input type="number" class="form-control" formControlName="creditCardPayment" placeholder="0.00" [(ngModel)]="creditForm.value.creditCardPayment" required>
+        </div>
       </div>
       <div class="form-group">
         <button [disabled]="!creditForm.valid" type="submit" class="btn btn-primary btn-block">Submit Payment</button>
@@ -30,3 +21,10 @@
     </form>  
   </div>
 </div>
+<!--
+<h2 mat-dialog-title>Pay Credit Card</h2>
+<mat-dialog-content>Account Number: {{account.checkingAccount}}</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close mat-dialog-close="submit payment">Submit Payment</button>
+</mat-dialog-actions>
+-->

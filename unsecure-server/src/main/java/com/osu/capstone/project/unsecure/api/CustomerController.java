@@ -4,6 +4,7 @@
 package com.osu.capstone.project.unsecure.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.osu.capstone.project.unsecure.dao.CustomerDAO;
 import com.osu.capstone.project.unsecure.dto.Customer;
+
 
 /**
  * Responsible for providing the server-side RESTful interface for the {@link Customer} DTO.

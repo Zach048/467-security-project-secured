@@ -1,6 +1,4 @@
 <app-navigation></app-navigation>
-<br>
-<br>
 <div class="container h-100">
    <div class="row h-100 justify-content-center align-items-center">
      <form class="col-6" [formGroup]="personalForm" (ngSubmit)="onSubmit()">
@@ -22,15 +20,22 @@
        </div>
        <div class="form-group">
         <label>Username</label>
-         <input type="text" class="form-control" formControlName="userName" [(ngModel)]="customer.userName" required>
-       </div>
-       <div class="form-group">
-        <label>Password</label>
-         <input type="text" class="form-control" formControlName="password" [(ngModel)]="customer.password" required>
+         <input id="uname" type="password" class="form-control" formControlName="userName" [(ngModel)]="customer.userName" required>
+         <input type="checkbox" (click)="showUsername()"> Show Username
         </div>
-       <div class="form-group">
+        <div class="form-group">
+          <label>New Password (not required)</label>
+           <input id="newpword" type="password" class="form-control" formControlName="newPassword" [(ngModel)]="customer.newPassword">  
+           <input type="checkbox" (click)="showNewPassword()"> Show Password
+          </div>
+        <div class="form-group">
+          <label>Enter Current Password to Update Information</label>
+            <input id="pword" type="password" class="form-control" formControlName="password" required>  
+            <input type="checkbox" (click)="showPassword()"> Show Password
+        </div>  
+        <div class="form-group">
          <button [disabled]="!personalForm.valid" type="submit" class="btn btn-primary btn-block">Update Information</button>
-       </div>
+        </div>
      </form>  
    </div>
  </div>

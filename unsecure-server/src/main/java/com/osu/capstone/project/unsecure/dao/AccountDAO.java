@@ -4,8 +4,10 @@
 package com.osu.capstone.project.unsecure.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 import com.osu.capstone.project.unsecure.dto.Account;
 import com.osu.capstone.project.unsecure.dto.Transactions;
@@ -18,6 +20,20 @@ import com.osu.capstone.project.unsecure.dto.Transactions;
 @Repository
 public class AccountDAO {
 	
+	public String encrypt(String toEncrypt) {
+		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+		textEncryptor.setPassword("${jasypt.encryptor.password}");
+		return textEncryptor.encrypt(toEncrypt);
+	}
+	
+
+	public String decryption(String toDecrypt) {
+		BasicTextEncryptor textDecryptor = new BasicTextEncryptor();
+		textDecryptor.setPassword("${jasypt.encryptor.password}");
+		return textDecryptor.decrypt(toDecrypt);
+		
+	}
+	
 	@Autowired
 	private JdbcTemplate template;
 	
@@ -27,7 +43,7 @@ public class AccountDAO {
 	public Account getAccount(Integer customerId) {
 		String query = "SELECT id, customer_id, checking_balance, credit_card_balance, " + 
 						"credit_card, checking_account FROM account WHERE id = " + customerId;
-		return template.queryForObject(query,(rs, rowNum) ->
+		Account a = template.queryForObject(query,(rs, rowNum) ->
 		new Account(
 				rs.getInt("id"),
 				rs.getString("checking_account"),
@@ -37,6 +53,19 @@ public class AccountDAO {
 				rs.getInt("customer_id")
 			)
 		);	
+		
+		/*
+		a.setCheckingAccount(encrypt(a.getCheckingAccount()));
+		a.setCreditCard(encrypt(a.getCreditCard()));
+		System.out.println("Encrypted Account: " + a.getCheckingAccount());
+		System.out.println("Encrypted Card: " + a.getCreditCard());
+		a.setCheckingAccount(b.decrypt(a.getCheckingAccount()));
+		a.setCreditCard(b.decrypt(a.getCreditCard()));
+		System.out.println("Decrypted Account: " + a.getCheckingAccount());
+		System.out.println("Decrypted Card: " + a.getCreditCard());
+		*/
+		
+		return a;
 	}
 	
 	public void addAccount(Account a) {
@@ -47,7 +76,6 @@ public class AccountDAO {
 	public void updateAccount(Account a) {
 		String query = "UPDATE account SET customer_id = ?, checking_balance = ?, credit_card_balance = ?, credit_card = ?, checking_account = ? WHERE id = ?";
 		template.update(query, a.getCustomerId(), a.getCheckingBalance(), a.getCreditCardBalance(), a.getCreditCard(), a.getCheckingAccount(), a.getAccountId());
-
 	}
 	
 	public void payBalance(Double amountPaid, Account a) {

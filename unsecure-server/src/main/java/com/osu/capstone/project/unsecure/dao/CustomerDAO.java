@@ -4,6 +4,7 @@
 package com.osu.capstone.project.unsecure.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -15,6 +16,7 @@ import com.osu.capstone.project.unsecure.dto.Customer;
  * Represents an interface between the {@link Customer} DTO and the underlying database table.
  * @author Zach Earl
  */
+
 @Repository
 public class CustomerDAO {
 	
@@ -53,26 +55,25 @@ public class CustomerDAO {
 					rs.getString("phone")
 				)
 			);
-		// authenticate customer 
-		if(c.getCustomerId() != null && password.equals(c.getPassword())) {
-			return c.getCustomerId();
+		
+		if(c.getCustomerId() != null) {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			if(password.equals(c.getPassword())) {
+				String hashedPassword = passwordEncoder.encode(c.getPassword());
+				query = "UPDATE customer SET password = ? WHERE id = ?";
+				template.update(query, hashedPassword, c.getCustomerId());
+				System.out.println("User entered password: " + password);
+				System.out.println("Hashed Password is: " + hashedPassword);
+				return c.getCustomerId();
+			}
+			else if(passwordEncoder.matches(password, c.getPassword())) {
+				return c.getCustomerId();
+			}
+			else {
+				return -1;
+			}
 		}
-//		else if(c.getCustomerId() == null) {
-//			c.setFirstName("John");
-//			c.setLastName("Doe");
-//			c.setEmail("john.doe@oregonstate.edu");
-//			c.setPhone("555-555-5555");
-//			addCustomer(c);
-//			
-//			Account newCustomerAccount = new Account(null, RandomStringUtils.random(9, "1234567890"), RandomStringUtils.random(16, "1234567890"), 1650.00, 1230.00, c.getCustomerId(), 4);
-//			accountDao.addAccount(newCustomerAccount);
-//			
-//			return c.getCustomerId();
-//		}
-		// customer failed authentication
-		else {
-			return -1;
-		}
+		return -1;
 	}
 	
 	public void addCustomer(Customer c) {
@@ -81,8 +82,33 @@ public class CustomerDAO {
 	}
 	
 	public void updateCustomer(Customer c) {
-		String query = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, phone = ? WHERE id = ?";
-		template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), c.getPassword(), c.getEmail(), c.getPhone(), c.getCustomerId());
-
+		//get the current customer information from the database
+		String query = "SELECT id, first_name, last_name, username, password, email, phone FROM customer WHERE id = " + c.getCustomerId();
+		Customer current = template.queryForObject(query,(rs, rowNum) ->
+		new Customer(
+				rs.getInt("id"),
+				rs.getString("username"),
+				rs.getString("password"),
+				rs.getString("first_name"),
+				rs.getString("last_name"),
+				rs.getString("email"),
+				rs.getString("phone")
+			)
+		);
+		//only update customer information if the password entered is correct
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if(passwordEncoder.matches(c.getPassword(), current.getPassword())) {
+			query = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, phone = ? WHERE id = ?";
+			//check if customer wants to set new password and hash the new password if so
+			if(c.getNewPassword() != null) {
+				String hashedNewPassword = passwordEncoder.encode(c.getNewPassword());
+				template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), hashedNewPassword, c.getEmail(), c.getPhone(), c.getCustomerId());
+			}
+			//otherwise update customer information normally
+			else {
+				String hashedPassword = passwordEncoder.encode(c.getPassword());
+				template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), hashedPassword, c.getEmail(), c.getPhone(), c.getCustomerId());
+			}
+		}
 	}
 }
