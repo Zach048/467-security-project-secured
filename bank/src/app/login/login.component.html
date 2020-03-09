@@ -1,3 +1,4 @@
+<!--
 <body>
   <div class="container">
     <div class="row">
@@ -21,4 +22,92 @@
       </div>
     </div>
   </div>
+</body>
+-->
+<body>
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Return User Sign In</h5>
+            <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit('loginForm')">
+              <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="Username" formControlName="username" [(ngModel)]="loginForm.username">
+              </div>
+              <p></p>
+              <div class="form-group">
+                <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" [(ngModel)]="loginForm.password">
+              </div>
+              <p></p>
+              <button [disabled]="!loginForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">New User Registration</h5>
+            <form class="form-signin" [formGroup]="newUserForm" (ngSubmit)="('newUserForm')">
+              <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="Username" formControlName="username" [(ngModel)]="newUserForm.username" [ngClass]="newUserForm.controls['username'].invalid ? 'is-invalid' : ''">
+                <div style="padding-top:10px;"></div>
+                <label class="col" [ngClass]="newUserForm.controls['username'].hasError('required') || newUserForm.controls['username'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['username'].hasError('required') ||
+                    newUserForm.controls['username'].hasError('minlength') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must be at least 6 characters!
+                </label>
+              </div>
+              <p></p>
+              <div class="form-group">
+                <!--
+                <label for="password" [ngClass]="newUserForm.controls['password'].invalid ? 'text-danger' : ''">Password:</label>
+                -->
+                <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" [(ngModel)]="newUserForm.password" [ngClass]="newUserForm.controls['password'].invalid ? 'is-invalid' : ''">
+                <div style="padding-top:10px;"></div>
+                <label class="col" [ngClass]="newUserForm.controls['password'].hasError('required') || newUserForm.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['password'].hasError('required') ||
+                    newUserForm.controls['password'].hasError('minlength') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must be at least 8 characters!
+                </label>
+                <label class="col" [ngClass]="newUserForm.controls['password'].hasError('required') || newUserForm.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['password'].hasError('required') ||
+                    newUserForm.controls['password'].hasError('hasNumber') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 number!
+                </label>
+                <label class="col" [ngClass]="newUserForm.controls['password'].hasError('required') || newUserForm.controls['password'].hasError('hasUpperCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['password'].hasError('required') ||
+                    newUserForm.controls['password'].hasError('hasCapitalCase') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Upper Case Letter!
+                </label>
+                <label class="col" [ngClass]="newUserForm.controls['password'].hasError('required') || newUserForm.controls['password'].hasError('hasLowerCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['password'].hasError('required') ||
+                    newUserForm.controls['password'].hasError('hasSmallCase') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Lower Case Letter!
+                </label>
+                <label class="col" [ngClass]="newUserForm.controls['password'].hasError('required') || newUserForm.controls['password'].hasError('hasSpecialCharacter') ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ newUserForm.controls['password'].hasError('required') ||
+                    newUserForm.controls['password'].hasError('hasSpecialCharacters') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Special Character from @#$%^&*!
+                </label>
+              </div>
+              <p></p>
+              <button [disabled]="!newUserForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>

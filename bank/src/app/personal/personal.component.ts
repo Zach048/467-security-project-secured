@@ -11,15 +11,14 @@ import { Router } from '@angular/router'
 })
 export class PersonalComponent implements OnInit {
   public customer = {};
-  submitted = false;
 
   personalForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),
-    phone: new FormControl(''),
-    userName: new FormControl(''),
-    password: new FormControl(''),
+    phone: new FormControl('', Validators.required),
+    userName: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
     newPassword: new FormControl('')
   });
 
@@ -64,8 +63,8 @@ export class PersonalComponent implements OnInit {
   }
 
   onSubmit(){
-    this.submitted = true;
     this.updateCustomer()
+    localStorage.setItem('isValidUser', 'true');
     console.log(this.customer);
     this._registrationService.register(this.customer)
       .subscribe(
