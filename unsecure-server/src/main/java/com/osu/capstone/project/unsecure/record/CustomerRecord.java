@@ -15,7 +15,7 @@ public class CustomerRecord {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Integer customerId;
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String userName;
 	@Column(name = "password")
 	private String password;
@@ -23,7 +23,7 @@ public class CustomerRecord {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	@Column(name = "phone")
 	private String phone;

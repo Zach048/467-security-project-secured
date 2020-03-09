@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.osu.capstone.project.unsecure.dao.CustomerDAO;
 import com.osu.capstone.project.unsecure.dto.Customer;
+import com.osu.capstone.project.unsecure.record.CustomerRecord;
 
 
 /**
@@ -30,23 +31,23 @@ public class CustomerController {
 	private CustomerDAO dao;
 	
 	@GetMapping("id/{customerId}")
-	public Customer getCustomer(@PathVariable Integer customerId) {
+	public CustomerRecord getCustomer(@PathVariable Integer customerId) {
 		return dao.getCustomer(customerId);
 	}
 	
-	@PostMapping("new")
-	public void newCustomer(@RequestBody Customer c) {
-		dao.addCustomer(c);
-	}
-	
-	@PutMapping("update")
-	public void updateCustomer(@RequestBody Customer c) {
-		dao.updateCustomer(c);
-	}
-	
-	@PostMapping("login/{userName}")
-	public Integer login(@PathVariable String userName, @RequestBody String password) {
-		return dao.login(userName, password);
-	}
+//	@PostMapping("new")
+//	public void newCustomer(@RequestBody Customer c) {
+//		dao.addCustomer(c);
+//	}
+//	
+//	@PutMapping("update")
+//	public void updateCustomer(@RequestBody Customer c) {
+//		dao.updateCustomer(c);
+//	}
+//	
+//	@PostMapping("login/{userName}")
+//	public Integer login(@PathVariable String userName, @RequestBody String password) {
+//		return dao.login(userName, password);
+//	}
 
 }
