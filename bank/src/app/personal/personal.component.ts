@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { RegistrationService } from '../registration.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal',
@@ -15,7 +15,7 @@ export class PersonalComponent implements OnInit {
   personalForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.email),
+    email: new FormControl('', [Validators.email, Validators.required]),
     phone: new FormControl('', Validators.required),
     userName: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -66,7 +66,7 @@ export class PersonalComponent implements OnInit {
     this.updateCustomer()
     localStorage.setItem('isValidUser', 'true');
     console.log(this.customer);
-    this._registrationService.register(this.customer)
+    this._registrationService.update(this.customer)
       .subscribe(
         response => console.log('Successfully updated customer information', response),
         error => console.error('Error updating customer information', error)

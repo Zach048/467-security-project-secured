@@ -1,0 +1,103 @@
+<h1 class="row justify-content-center align-items-center">Create Account</h1>
+
+<div class="container">
+   <div class="row justify-content-center align-items-center">
+     <form class="col-6" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+       <div class="form-group">
+         <label>First Name</label>
+         <input type="text" class="form-control" formControlName="firstName" [ngClass]="registrationForm.controls['firstName'].invalid ? 'is-invalid' : ''">
+         <div style="padding-top:10px;"></div>
+         <label class="col" [ngClass]="registrationForm.controls['firstName'].hasError('required') || registrationForm.controls['firstName'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+           <i class="material-icons">{{ registrationForm.controls['firstName'].hasError('required') ||
+             registrationForm.controls['firstName'].hasError('minlength') ? 'cancel' :
+             'check_circle' }}</i>
+           First Name Required!
+        </label>
+       </div>
+       <div class="form-group">
+        <label>Last Name</label>
+         <input type="text" class="form-control" formControlName="lastName" [ngClass]="registrationForm.controls['lastName'].invalid ? 'is-invalid' : ''">
+         <div style="padding-top:10px;"></div>
+         <label class="col" [ngClass]="registrationForm.controls['lastName'].hasError('required') || registrationForm.controls['lastName'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+           <i class="material-icons">{{ registrationForm.controls['lastName'].hasError('required') ||
+             registrationForm.controls['lastName'].hasError('minlength') ? 'cancel' :
+             'check_circle' }}</i>
+           Last Name Required!
+        </label>
+       </div>
+       <div class="form-group">
+        <label>Email</label>
+         <input type="text" class="form-control" formControlName="email" [ngClass]="registrationForm.controls['email'].invalid ? 'is-invalid' : ''">
+         <div style="padding-top:10px;"></div>
+         <label class="col" [ngClass]="registrationForm.controls['email'].hasError('required') || registrationForm.controls['email'].hasError('email')  ? 'text-danger' : 'text-success'">
+            <i class="material-icons">{{ registrationForm.controls['email'].hasError('required') ||
+              registrationForm.controls['email'].hasError('email') ? 'cancel' :
+              'check_circle' }}</i>
+            Valid Email Required!
+         </label>
+       </div>
+       <div class="form-group">
+        <label>Phone</label>
+         <input type="text" class="form-control" formControlName="phone" [ngClass]="registrationForm.controls['phone'].invalid ? 'is-invalid' : ''">
+         <div style="padding-top:10px;"></div>
+         <label class="col" [ngClass]="registrationForm.controls['phone'].hasError('required') || registrationForm.controls['phone'].hasError('minLength')  ? 'text-danger' : 'text-success'">
+            <i class="material-icons">{{ registrationForm.controls['phone'].hasError('required') ||
+              registrationForm.controls['phone'].hasError('minLength') ? 'cancel' :
+              'check_circle' }}</i>
+            Phone Number Required!
+         </label>
+       </div>
+       <div class="form-group">
+        <label>Username</label>
+         <input id="uname" type="password" class="form-control" formControlName="userName" [ngClass]="registrationForm.controls['userName'].invalid ? 'is-invalid' : ''">
+         <input type="checkbox" (click)="showUsername()"> Show Username
+                <div style="padding-top:10px;"></div>
+                <label class="col" [ngClass]="registrationForm.controls['userName'].hasError('required') || registrationForm.controls['userName'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['userName'].hasError('required') ||
+                    registrationForm.controls['userName'].hasError('minlength') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must be at least 6 characters!
+               </label>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+           <input id="pword" type="password" class="form-control" formControlName="password" [(ngModel)]="password" [ngClass]="registrationForm.controls['password'].invalid ? 'is-invalid' : ''">  
+           <input type="checkbox" (click)="showPassword()"> Show Password
+                <div style="padding-top:10px;"></div>
+                <label class="col" [ngClass]="registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['password'].hasError('required') ||
+                    registrationForm.controls['password'].hasError('minlength') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must be at least 8 characters!
+                </label>
+                <label class="col" [ngClass]="registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['password'].hasError('required') ||
+                    registrationForm.controls['password'].hasError('hasNumber') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 number!
+                </label>
+                <label class="col" [ngClass]="registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('hasUpperCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['password'].hasError('required') ||
+                    registrationForm.controls['password'].hasError('hasUpperCase') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Upper Case Letter!
+                </label>
+                <label class="col" [ngClass]="registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('hasLowerCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['password'].hasError('required') ||
+                    registrationForm.controls['password'].hasError('hasLowerCase') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Lower Case Letter!
+                </label>
+                <label class="col" [ngClass]="registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('hasSpecialCharacter') ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">{{ registrationForm.controls['password'].hasError('required') ||
+                    registrationForm.controls['password'].hasError('hasSpecialCharacter') ? 'cancel' :
+                    'check_circle' }}</i>
+                  Must contain at least 1 Special Character from @#$%^&*!
+                </label>
+          </div>
+        <div class="form-group">
+         <button [disabled]="!registrationForm.valid" type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+     </form>  
+   </div>
+</div>

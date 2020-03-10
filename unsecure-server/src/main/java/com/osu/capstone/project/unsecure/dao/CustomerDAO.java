@@ -32,10 +32,8 @@ public class CustomerDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	
 	public Integer login(String userName, String password) {
 		String query = "SELECT id, first_name, last_name, username, password, email, phone FROM customer WHERE username = " + "'"+userName+"'";
-		System.out.println(query);
 			Customer c = template.queryForObject(query,(rs, rowNum) ->
 			new Customer(
 					rs.getInt("id"),
@@ -47,17 +45,17 @@ public class CustomerDAO {
 					rs.getString("phone")
 				)
 			);
-		
+		//authenticate user
 		if(c.getCustomerId() != null) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			//if password has not yet been hashed check for match and hash password
 			if(password.equals(c.getPassword())) {
 				String hashedPassword = passwordEncoder.encode(c.getPassword());
 				query = "UPDATE customer SET password = ? WHERE id = ?";
 				template.update(query, hashedPassword, c.getCustomerId());
-				System.out.println("User entered password: " + password);
-				System.out.println("Hashed Password is: " + hashedPassword);
 				return c.getCustomerId();
 			}
+			//if password has already been hashed confirm it matches
 			else if(passwordEncoder.matches(password, c.getPassword())) {
 				return c.getCustomerId();
 			}
@@ -68,28 +66,40 @@ public class CustomerDAO {
 		return -1;
 	}
 	
+	/*
+	 * TO DO: create account and transactions linked to new user
+	 */
 	public void addCustomer(Customer c) {
+		//hash the customer's password
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(c.getPassword());
+		
+		//enter customer information into the database
 		String query = "INSERT INTO customer (first_name, last_name, username, password, email, phone) VALUES(?, ?, ?, ?, ?, ?)";
-		template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), c.getPassword(), c.getEmail(), c.getPhone());
+		template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), hashedPassword, c.getEmail(), c.getPhone());
+		
+		//create account for the new customer
+		//query = "INSERT INTO account () VALUES()";
+		//template.update(query, );
+		
+		//create record of transactions for the new customer
+		//query = "INSERT INTO transactions () VALUES()";
+		//template.update(query, );
+		
 	}
+
 	
 	public void updateCustomer(Customer c) {
-		//get the current customer information from the database
-		String query = "SELECT id, first_name, last_name, username, password, email, phone FROM customer WHERE id = " + c.getCustomerId();
-		Customer current = template.queryForObject(query,(rs, rowNum) ->
-		new Customer(
-				rs.getInt("id"),
-				rs.getString("username"),
-				rs.getString("password"),
-				rs.getString("first_name"),
-				rs.getString("last_name"),
-				rs.getString("email"),
-				rs.getString("phone")
-			)
+		//get the current customer password from the database
+		String query = "SELECT password FROM customer WHERE id = " + c.getCustomerId();
+		String currentPassword = template.queryForObject(query,(rs, rowNum) ->
+		new String(
+				rs.getString("password")
+				)
 		);
 		//only update customer information if the password entered is correct
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		if(passwordEncoder.matches(c.getPassword(), current.getPassword())) {
+		if(passwordEncoder.matches(c.getPassword(), currentPassword)) {
 			query = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, phone = ? WHERE id = ?";
 			//check if customer wants to set new password and hash the new password if so
 			if(c.getNewPassword() != null) {

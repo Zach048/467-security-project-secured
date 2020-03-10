@@ -35,19 +35,19 @@ public class CustomerController {
 		return dao.getCustomer(customerId);
 	}
 	
-//	@PostMapping("new")
-//	public void newCustomer(@RequestBody Customer c) {
-//		dao.addCustomer(c);
-//	}
-//	
-//	@PutMapping("update")
-//	public void updateCustomer(@RequestBody Customer c) {
-//		dao.updateCustomer(c);
-//	}
-//	
-//	@PostMapping("login/{userName}")
-//	public Integer login(@PathVariable String userName, @RequestBody String password) {
-//		return dao.login(userName, password);
-//	}
+	@PostMapping("new")
+	public void newCustomer(@RequestBody Customer c) {
+		dao.addCustomer(c);
+	}
+	
+	@PutMapping("update")
+	public void updateCustomer(@RequestBody Customer c) {
+		dao.updateCustomer(c);
+	}
+	
+	@PostMapping("login/{userName}")
+	public Integer login(@PathVariable String userName, @RequestBody String password) {
+		return dao.login(userName, password);
+	}
 
 }
