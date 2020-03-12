@@ -194,6 +194,7 @@ public class CustomerDAO {
 //				rs.getString("password")
 //				)
 //		);
+<<<<<<< HEAD
 		
 		System.out.println("customer.getPassword() = " + customer.getPassword());
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -232,6 +233,12 @@ public class CustomerDAO {
 		
 		
 		/*
+=======
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CustomerRecord c = (CustomerRecord)entityManager.getReference(CustomerRecord.class, customer.getCustomerId());
+		String currentPassword = c.getPassword();
+		System.out.println("Current password: " + c.getPassword());
+>>>>>>> a18bccbb1014acc1e0739852ef44c226f6658797
 		//only update customer information if the password entered is correct
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		System.out.println("Initialize Bcrypt");
@@ -273,6 +280,10 @@ public class CustomerDAO {
 		}
 		entityManager.close();
 	}
+<<<<<<< HEAD
 	*/
+=======
+	
+>>>>>>> a18bccbb1014acc1e0739852ef44c226f6658797
 
 }
