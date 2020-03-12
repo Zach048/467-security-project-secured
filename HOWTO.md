@@ -14,21 +14,25 @@
 [Using Components With Known Vulnerabilities](#known-vulnerabilities)  
 [Insufficient Logging and Monitoring](#logging)
 
-##### II. Scanning For Security Vulnerabilities
+##### II. Introducing the Bank of Piracy / The Bank Privacy
+
+[The Bank of Piracy](#unsecure)  
+[The Bank of Privacy](#secure)
+
+##### III. Scanning For Security Vulnerabilities
 
 [Introduction to OWASP ZAP](#zap)  
-[Results](#results)
-[The Bank of Piracy](#unsecureResults)
-[The Bank of Privacy](#secureResults)
+[Results: The Bank of Piracy](#unsecureResults)  
+[Results: The Bank of Privacy](#secureResults)
 
-##### III. Security Vulnerability Exploit Attacks   
+##### IV. Security Vulnerability Exploit Attacks   
 
 [Cross Scripting Attack](#xss-attack)  
 [SQL Code Injection](#injection-attack)  
 [Broken Authentication](#passwords-attack)  
 [Broken Access Control](#access-attack)  
 
-##### IV. Security Vulnerability Mitigations  
+##### V. Security Vulnerability Mitigations  
 
 [Cross Scripting Attack](#xss-mit)
 [SQL Code Injection](#injection-mit)  
@@ -105,31 +109,39 @@ Some attacks may penetrate even the best security defenses, but a proper securit
 
 [OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
 
+## Introducing The Bank of Piracy / The Bank of Privacy
+
+<a name="unsecure"/>
+
+### Bank of Piracy
+
+The Bank of Piracy is the unsecure version of the application.  The front-end of the application uses HTML and CSS in conjunction with Express Framework to deliver the user an interactive online bank account.  The back-end of the application is a Node.js server combined with a MySQL relational database.  There are user accounts stored in the database with user authentication via the login page and the user can input data to pay their credit card bill, update the personal information on their account, or search their list of transactions for a specific vendor.  All data are stored in the database in plaintext with the exception of passwords, which are encrypted for storage in the database using SHA1, a cryptographic hash function that takes a plaintext input and generates a 160-bit hash value that is rendered as a 40-digit hexadecimal number.  Use of SHA1 is no longer recommended due to its associated vulnerabilities, but hash functions can provide a false sense of security simply because they are not supposed to be unhashable.
+
+<a name="secure"/>
+
+### Bank of Privacy
+
+The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  The back-end of the application...
+
 ## Scanning For Security Vulnerabilities
 
 <a name="zap"/>
 
-### Introduction to OWASP ZAP  
+## Introduction to OWASP ZAP  
 
 The Open Web Application Security Project (OWASP) is a nonprofit working to advance the security of software through community-driven open source development.  Zed Attack Proxy (ZAP) is a tool created by OWASP to perform security testing in a manner that can be understood by individuals ranging in experience from novice to expert.  ZAP is a penetration testing tool specifically designed for web applications and functions primarily as a "man-in-the-middle proxy" by intercepting and monitoring data transmitted between the browser and web application.  The tool should only be run on sites that you have permission to attack as the simulation functions like a real attack and has the potential to damage the appication's functionality, data, etc.
 
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
 
-<a name="results"/>
-
-### OWASP Zap Scanning Results
-
 <a name="unsecureResults"/>
 
-## Bank of Piracy
-
-The Bank of Piracy is the unsecure version of the application.  The front-end of the application uses HTML and CSS in conjunction with Express Framework to deliver the user an interactive online bank account.  The back-end of the application is a Node.js server combined with a MySQL relational database.  There are user accounts stored in the database with user authentication via the login page and the user can input data to pay their credit card bill, update the personal information on their account, or search their list of transactions for a specific vendor.  All data are stored in the database in plaintext with the exception of passwords, which are encrypted for storage in the database using SHA1, a cryptographic hash function that takes a plaintext input and generates a 160-bit hash value that is rendered as a 40-digit hexadecimal number.  Use of SHA1 is no longer recommended due to its associated vulnerabilities, but hash functions can provide a false sense of security simply because they are not supposed to be unhashable.
+### OWASP Zap Scanning Results: Bank of Piracy
 
 <a name="secureResults"/>
 
-## Bank of Privacy
+### OWASP Zap Scanning Results: Bank of Privacy
 
-The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  
+
 ## Security Vulnerability Exploit Attacks
 
 <a name="injection-attack"/>
