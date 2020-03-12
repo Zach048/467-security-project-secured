@@ -14,7 +14,7 @@
 [Using Components With Known Vulnerabilities](#known-vulnerabilities)  
 [Insufficient Logging and Monitoring](#logging)
 
-##### II. Introducing the Bank of Piracy / The Bank Privacy
+##### II. Introducing the Bank of Piracy / The Bank of Privacy
 
 [The Bank of Piracy](#unsecure)  
 [The Bank of Privacy](#secure)
@@ -34,14 +34,14 @@
 
 ##### V. Security Vulnerability Mitigations  
 
-[Cross Scripting Attack](#xss-mit)
-[SQL Code Injection](#injection-mit)  
+[SQL Code Injection](#injection-mit)   
 [Broken Authentication](#encryption-mit)  
-[Broken Access Control](#access-mit)  
-[Logging](#logging-mit)  
-[Security Misconfiguration](#misconfig-mit)  
 [Sensitive Data Exposure](#dataexp-mit)  
-[Using Components with Known Vulnerabilities](#outdated-mit)
+[Broken Access Control](#access-mit)  
+[Security Misconfiguration](#misconfig-mit)  
+[Cross-Site Scripting (XSS)](#xss-mit)  
+[Using Components with Known Vulnerabilities](#outdated-mit)  
+[Insufficient Logging and Monitoring](#logging-mit)
 
 ## Defining Security Vulnerabilites
 
@@ -109,7 +109,7 @@ Some attacks may penetrate even the best security defenses, but a proper securit
 
 [OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
 
-## Introducing The Bank of Piracy / The Bank of Privacy
+## The Bank of Piracy / The Bank of Privacy
 
 <a name="unsecure"/>
 
@@ -127,7 +127,7 @@ The Bank of Privacy is the secure version of the application.  The front-end of 
 
 <a name="zap"/>
 
-## Introduction to OWASP ZAP  
+### Introduction to OWASP ZAP  
 
 The Open Web Application Security Project (OWASP) is a nonprofit working to advance the security of software through community-driven open source development.  Zed Attack Proxy (ZAP) is a tool created by OWASP to perform security testing in a manner that can be understood by individuals ranging in experience from novice to expert.  ZAP is a penetration testing tool specifically designed for web applications and functions primarily as a "man-in-the-middle proxy" by intercepting and monitoring data transmitted between the browser and web application.  The tool should only be run on sites that you have permission to attack as the simulation functions like a real attack and has the potential to damage the appication's functionality, data, etc.
 
@@ -155,8 +155,6 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 <a name="dataexp-mit"/>
 
 ### Sensitive Data Exposure
-
-
 
 <a name="access-attack"/>
 
@@ -189,6 +187,12 @@ The Bank of Piracy leaves user data at risk by failing to protect against accoun
 <a name="encryption-mit"/>
 
 ### Broken Authentication
+
+<a name="dataexp-mit"/> 
+
+### Sensitive Data Exposure
+
+The Bank of Privacy employs methods on the front-end, back-end, and in between to protect sensitive data from exposure to risk.  On the front-end the user is only shown the last four digits of their account number and credit card, which is just enough information to verify that they are correct but not enough to leave the user at risk if someone should gain unauthorized access to the account.  The user has the ability to hide their username and password in their respective fields on the personal information update form so that they are indiscernible to the naked eye.  Data passed between the front and back-end of the application have increased protection through Hypertext Transfer Protocol Secure (HTTPS), an extension of HTTP that utilizes Transport Layer Security (TLS) to employ cryptographic protocols for secure communications over a computer network.  
 
 <a name="access-mit"/>
 
