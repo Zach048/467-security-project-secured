@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.osu.capstone.project.unsecure.dao.CustomerDAO;
 import com.osu.capstone.project.unsecure.dto.Customer;
-import com.osu.capstone.project.unsecure.record.CustomerRecord;
 
 
 /**
@@ -31,7 +29,7 @@ public class CustomerController {
 	private CustomerDAO dao;
 	
 	@GetMapping("id/{customerId}")
-	public CustomerRecord getCustomer(@PathVariable Integer customerId) {
+	public Customer getCustomer(@PathVariable Integer customerId) {
 		return dao.getCustomer(customerId);
 	}
 	

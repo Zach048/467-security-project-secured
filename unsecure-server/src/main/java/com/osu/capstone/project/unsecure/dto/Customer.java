@@ -3,6 +3,7 @@
  */
 package com.osu.capstone.project.unsecure.dto;
 
+import com.osu.capstone.project.unsecure.record.CustomerRecord;
 
 /**
  * The purpose of this class is to decouple the underlying database structure from the 
@@ -20,6 +21,15 @@ public class Customer {
 	private String phone;
 	private String new_password;
 	
+	public Customer(CustomerRecord customer) {
+		this.customerId = customer.getCustomerId();
+		this.userName = customer.getUserName();
+		this.password = customer.getPassword();
+		this.firstName = customer.getFirstName();
+		this.lastName = customer.getLastName();
+		this.email = customer.getEmail();
+		this.phone = customer.getPhone();
+	}
 	
 	public Customer(Integer customerId, String userName, String password, String firstName, String lastName, String email,
 			String phone) {

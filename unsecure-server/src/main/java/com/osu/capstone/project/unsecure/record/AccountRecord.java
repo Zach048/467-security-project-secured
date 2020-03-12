@@ -3,6 +3,7 @@
  */
 package com.osu.capstone.project.unsecure.record;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 public class AccountRecord {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer accountId;
 	@Column(name = "checking_account")
@@ -30,16 +31,15 @@ public class AccountRecord {
 	private Double checkingBalance;
 	@Column(name = "credit_card_balance")
 	private Double creditCardBalance;
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, cascade= CascadeType.ALL)
 	@JoinColumn(name = "customer_id")
 	private CustomerRecord customer;
 	
 	public AccountRecord(){}
 	
 
-	public AccountRecord(Integer accountId, String checkingAccount, String creditCard, Double checkingBalance,
+	public AccountRecord(String checkingAccount, String creditCard, Double checkingBalance,
 			Double creditCardBalance, CustomerRecord customer) {
-		this.accountId = accountId;
 		this.checkingAccount = checkingAccount;
 		this.creditCard = creditCard;
 		this.checkingBalance = checkingBalance;

@@ -1,5 +1,6 @@
 package com.osu.capstone.project.unsecure.record;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +14,10 @@ import javax.persistence.Table;
 @Table(name = "transactions")
 public class TransactionsRecord {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer transactionId;
-	@ManyToOne
+	@ManyToOne(optional = false, cascade= CascadeType.ALL)
 	@JoinColumn(name = "account_id")
 	private AccountRecord account;
 	@Column(name = "vendor_name")
@@ -26,8 +27,7 @@ public class TransactionsRecord {
 	
 	public TransactionsRecord() {}
 
-	public TransactionsRecord(Integer transactionId, AccountRecord account, String vendorName, Double amountPaid) {
-		this.transactionId = transactionId;
+	public TransactionsRecord(AccountRecord account, String vendorName, Double amountPaid) {
 		this.account = account;
 		this.vendorName = vendorName;
 		this.amountPaid = amountPaid;
