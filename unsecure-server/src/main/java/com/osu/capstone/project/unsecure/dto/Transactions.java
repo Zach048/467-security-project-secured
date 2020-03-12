@@ -3,6 +3,8 @@
  */
 package com.osu.capstone.project.unsecure.dto;
 
+import com.osu.capstone.project.unsecure.record.TransactionsRecord;
+
 /**
  * The purpose of this class is to decouple the underlying database structure from the 
  * data available to the end user.
@@ -13,6 +15,13 @@ public class Transactions {
 	private Integer accountId;
 	private String vendorName;
 	private Double amountPaid;
+	
+	public Transactions(TransactionsRecord transaction) {
+		this.transactionId = transaction.getTransactionId();
+		this.accountId = transaction.getAccount().getAccountId();
+		this.vendorName = transaction.getVendorName();
+		this.amountPaid = transaction.getAmountPaid();
+	}
 	
 	public Transactions(Integer transactionId, Integer accountId, String vendorName, Double amountPaid) {
 		this.transactionId = transactionId;

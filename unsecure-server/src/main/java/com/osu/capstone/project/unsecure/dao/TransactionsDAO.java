@@ -3,13 +3,25 @@
  */
 package com.osu.capstone.project.unsecure.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.osu.capstone.project.unsecure.dto.Transactions;
+import com.osu.capstone.project.unsecure.record.AccountRecord;
+import com.osu.capstone.project.unsecure.record.CustomerRecord;
+import com.osu.capstone.project.unsecure.record.TransactionsRecord;
 
 /**
  * Represents an interface between the {@link Transactions} DTO and the underlying database table.
@@ -21,29 +33,43 @@ public class TransactionsDAO {
 	@Autowired
 	private JdbcTemplate template;
 	
+	@PersistenceUnit()
+	private EntityManagerFactory entityManagerFactory;
+	
 	public List<Transactions> getTransactions(Integer customerId) {
-
-		String query = "SELECT t.id, account_id, vendor_name, amount_paid FROM transactions t"
-				+ " INNER JOIN account ON t.account_id = account.id WHERE "
-				+ "account.customer_id = " + customerId;
-		return template.query(query,(rs, rowNum) ->
-		new Transactions(
-				rs.getInt("id"),
-				rs.getInt("account_id"),
-				rs.getString("vendor_name"),
-				rs.getDouble("amount_paid")
-			)
-		);	
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CustomerRecord c = (CustomerRecord)entityManager.find(CustomerRecord.class, customerId);
+		entityManager.detach(c);
+		String sql = "FROM TransactionsRecord t WHERE t.account.customer = :customer";
+		TypedQuery<TransactionsRecord> query = entityManager.createQuery(sql, TransactionsRecord.class);
+		query.setParameter("customer", c);
+		List<TransactionsRecord> t = query.getResultList();
+		List<Transactions> transactions = new ArrayList<>();
+		for (int i = 0; i < t.size(); i++) {
+			transactions.add(new Transactions(t.get(i)));
+		}
+		entityManager.close();
+		return transactions;
 	}
-	
 	public void addTransaction(Transactions t) {
-		String query = "INSERT INTO transactions (account_id, vendor_name, amount_paid) VALUES(?, ?, ?)";
-		template.update(query, t.getAccountId(), t.getVendorName(), t.getAmountPaid());
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		AccountRecord a = (AccountRecord) entityManager.find(AccountRecord.class, t.getAccountId());
+		TransactionsRecord newRecord = new TransactionsRecord(a, t.getVendorName(), t.getAmountPaid());
+		entityManager.getTransaction().begin();
+		entityManager.persist(newRecord);
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
-	
 	public void updateTransaction(Transactions t) {
-		String query = "UPDATE transactions SET account_id = ?, vendor_name = ?, amount_paid = ? WHERE id = ?";
-		template.update(query, t.getAccountId(), t.getVendorName(), t.getAmountPaid(), t.getTransactionId());
-
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		TransactionsRecord transaction = (TransactionsRecord) entityManager.getReference(TransactionsRecord.class, t.getTransactionId());
+		AccountRecord account = (AccountRecord)entityManager.getReference(AccountRecord.class, t.getAccountId());
+		transaction.setVendorName(t.getVendorName());
+		transaction.setAmountPaid(t.getAmountPaid());
+		transaction.setAccount(account);
+		entityManager.getTransaction().begin();
+		entityManager.merge(transaction);
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
 }

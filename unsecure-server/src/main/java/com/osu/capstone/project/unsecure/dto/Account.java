@@ -3,6 +3,8 @@
  */
 package com.osu.capstone.project.unsecure.dto;
 
+import com.osu.capstone.project.unsecure.record.AccountRecord;
+
 /**
  * The purpose of this class is to decouple the underlying database structure from the 
  * data available to the end user.
@@ -15,6 +17,15 @@ public class Account {
 	private Double checkingBalance;
 	private Double creditCardBalance;
 	private Integer customerId;
+	
+	public Account(AccountRecord account) {
+		this.accountId = account.getAccountId();
+		this.checkingAccount = account.getCheckingAccount();
+		this.creditCard = account.getCreditCard();
+		this.checkingBalance = account.getCheckingBalance();
+		this.creditCardBalance = account.getCreditCardBalance();
+		this.customerId = account.getCustomer().getCustomerId();
+	}
 	
 	public Account(Integer accountId, String checkingAccount, String creditCard, Double checkingBalance, Double creditCardBalance, Integer customerId) {
 		this.accountId = accountId;

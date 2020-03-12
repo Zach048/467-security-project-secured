@@ -3,6 +3,7 @@ import { RegistrationService } from '../registration.service';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../custom-validators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -27,9 +28,10 @@ export class RegistrationComponent implements OnInit {
      ])
   });
 
-  constructor(private _registrationService: RegistrationService, private router: Router) { }
+  constructor(private authService: AuthService, private _registrationService: RegistrationService, private router: Router) { }
 
   ngOnInit() {
+    this.authService.logout();
   }
 
   showPassword() {

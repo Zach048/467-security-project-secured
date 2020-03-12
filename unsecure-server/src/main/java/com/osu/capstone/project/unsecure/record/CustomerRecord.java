@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "customer")
 public class CustomerRecord {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer customerId;
 	@Column(name = "username", unique = true)
@@ -27,12 +27,13 @@ public class CustomerRecord {
 	private String email;
 	@Column(name = "phone")
 	private String phone;
+	@Transient
+	private String new_password;
 	
 	public CustomerRecord() {}
 
-	public CustomerRecord(Integer customerId, String userName, String password, String firstName, String lastName,
+	public CustomerRecord(String userName, String password, String firstName, String lastName,
 			String email, String phone) {
-		this.customerId = customerId;
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -96,5 +97,13 @@ public class CustomerRecord {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}	
+	
+	public String getNewPassword() {
+		return new_password;
+	}
+
+	public void setNewPassword(String new_password) {
+		this.new_password = new_password;
+	}
 
 }

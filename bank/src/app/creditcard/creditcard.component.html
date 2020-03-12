@@ -3,9 +3,9 @@
   <div class="row h-100 justify-content-center align-items-center">
     <form class="col-6" [formGroup]="creditForm" (ngSubmit)="onSubmit()">
       <ul class="list-group">
-        <li class="list-group-item">Checking Account: {{ account.checkingAccount }}</li>
+        <li class="list-group-item">Checking Account: {{ acctNum }}</li>
         <li class="list-group-item">Checking Account Balance: {{ account.checkingBalance | currency }}</li>        
-        <li class="list-group-item">Credit Card: {{ account.creditCard }}</li>
+        <li class="list-group-item">Credit Card: {{ credNum }}</li>
         <li class="list-group-item">Credit Card Balance: {{ account.creditCardBalance | currency }}</li>
       </ul>
       <br>
@@ -16,15 +16,8 @@
         </div>
       </div>
       <div class="form-group">
-        <button [disabled]="!creditForm.valid" type="submit" class="btn btn-primary btn-block">Submit Payment</button>
+        <button *ngIf="hideButton==false" [disabled]="!creditForm.valid" type="submit" class="btn btn-primary btn-block">Submit Payment</button>
       </div>
     </form>  
   </div>
 </div>
-<!--
-<h2 mat-dialog-title>Pay Credit Card</h2>
-<mat-dialog-content>Account Number: {{account.checkingAccount}}</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close mat-dialog-close="submit payment">Submit Payment</button>
-</mat-dialog-actions>
--->
