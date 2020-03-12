@@ -136,6 +136,8 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### Broken Access Control
 
+The unsecure version of the application leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. 
+
 <a name="misconfig-mit"/>
 
 ### Security Misconfiguration  
@@ -165,6 +167,8 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 <a name="access-mit"/>
 
 ### Broken Access Control
+
+The secured version of the application uses sessions in order to prevent accounts from being accessed without authorization.  Additionally, routes in the secured application do not employ the use of parameters to pass the user id to one another, thereby adding an additional layer of protection against broken access to user data. The login page and new user registration page are accessible without the creation of a session, which occurs after a user enters a correct username and password combination to log into an account.  Once logged into an account, a user can access the dashboard, view their transactions, pay their credit card bill, and update their personal information.  When a user logs out of the account, the session is terminated and the user must present their credentials again in order to regain access to the pages beyond the login screen.  The new user registration page is meant to be accessed from a button on the login page but can also be accessed directly via URL, so when the page is loaded it automatically makes sure that there is no current session in order to prevent the possible contamination of data submitted in the form.
 
 <a name="xss-mit"/>
 
