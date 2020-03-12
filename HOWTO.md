@@ -18,6 +18,8 @@
 
 [Introduction to OWASP ZAP](#zap)  
 [Results](#results)
+[The Bank of Piracy](#unsecureResults)
+[The Bank of Privacy](#secureResults)
 
 ##### III. Security Vulnerability Exploit Attacks   
 
@@ -117,7 +119,17 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### OWASP Zap Scanning Results
 
+<a name="unsecureResults"/>
 
+## Bank of Piracy
+
+The Bank of Piracy is the unsecure version of the application.  The front-end of the application uses HTML and CSS in conjunction with Express Framework to deliver the user an interactive online bank account.  The back-end of the application is a Node.js server combined with a MySQL relational database.  There are user accounts stored in the database with user authentication via the login page and the user can input data to pay their credit card bill, update the personal information on their account, or search their list of transactions for a specific vendor.  All data are stored in the database in plaintext with the exception of passwords, which are encrypted for storage in the database using SHA1, a cryptographic hash function that takes a plaintext input and generates a 160-bit hash value that is rendered as a 40-digit hexadecimal number.  Use of SHA1 is no longer recommended due to its associated vulnerabilities, but hash functions can provide a false sense of security simply because they are not supposed to be unhashable.
+
+<a name="secureResults"/>
+
+## Bank of Privacy
+
+The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  
 ## Security Vulnerability Exploit Attacks
 
 <a name="injection-attack"/>
@@ -132,11 +144,13 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### Sensitive Data Exposure
 
+
+
 <a name="access-attack"/>
 
 ### Broken Access Control
 
-The unsecure version of the application leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. 
+The Bank of Piracy leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. 
 
 <a name="misconfig-mit"/>
 
@@ -168,7 +182,7 @@ The unsecure version of the application leaves user data at risk by failing to p
 
 ### Broken Access Control
 
-The secured version of the application uses sessions in order to prevent accounts from being accessed without authorization.  Additionally, routes in the secured application do not employ the use of parameters to pass the user id to one another, thereby adding an additional layer of protection against broken access to user data. The login page and new user registration page are accessible without the creation of a session, which occurs after a user enters a correct username and password combination to log into an account.  Once logged into an account, a user can access the dashboard, view their transactions, pay their credit card bill, and update their personal information.  When a user logs out of the account, the session is terminated and the user must present their credentials again in order to regain access to the pages beyond the login screen.  The new user registration page is meant to be accessed from a button on the login page but can also be accessed directly via URL, so when the page is loaded it automatically makes sure that there is no current session in order to prevent the possible contamination of data submitted in the form.
+The Bank of Privacy uses sessions in order to prevent accounts from being accessed without authorization.  Additionally, routes in the application do not employ the use of parameters to pass the user id to one another, thereby adding an additional layer of protection against broken access to user data. The login page and new user registration page are accessible without the creation of a session, which occurs after a user enters a correct username and password combination to log into an account.  Once logged into an account, a user can access the dashboard, view their transactions, pay their credit card bill, and update their personal information.  When a user logs out of the account, the session is terminated and the user must present their credentials again in order to regain access to the pages beyond the login screen.  The new user registration page is meant to be accessed from a button on the login page but can also be accessed directly via URL, so when the page is loaded it automatically makes sure that there is no current session in order to prevent the possible contamination of data submitted in the form.
 
 <a name="xss-mit"/>
 
