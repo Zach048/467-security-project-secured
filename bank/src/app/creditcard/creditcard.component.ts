@@ -22,7 +22,7 @@ export class CreditcardComponent implements OnInit {
   credPay: number;
 
   creditForm = new FormGroup({
-    creditCardPayment: new FormControl('', Validators.min(0))
+    creditCardPayment: new FormControl('', [Validators.min(0), Validators.maxLength(25)])
   });
 
   constructor(private _accountService: AccountService, private _paymentService: PaymentService, private router: Router) { }

@@ -18,17 +18,17 @@ export class PersonalComponent implements OnInit {
   public hideButton = false;
 
   loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    username: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    password: new FormControl('', [Validators.required, Validators.maxLength(25)])
   });
 
   personalForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.email, Validators.required]),
-    phone: new FormControl('', Validators.required),
-    userName: new FormControl('', Validators.required),
-    password: new FormControl('')
+    firstName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    lastName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    email: new FormControl('', [Validators.email, Validators.required, Validators.maxLength(30)]),
+    phone: new FormControl('', [Validators.required, Validators.maxLength(15)]),
+    userName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    password: new FormControl('', Validators.maxLength(25))
   });
 
   constructor(private _loginService: LoginService, private _customerService: CustomerService, private _registrationService: RegistrationService, private router: Router) { }
