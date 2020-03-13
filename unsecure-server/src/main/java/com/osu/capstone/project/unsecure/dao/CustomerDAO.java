@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.security.NoSuchAlgorithmException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
@@ -21,6 +20,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.osu.capstone.project.unsecure.dto.Account;
 import com.osu.capstone.project.unsecure.dto.Customer;
 import com.osu.capstone.project.unsecure.record.CustomerRecord;
+import com.osu.capstone.project.unsecure.dao.AccountDAO;
+
 
 /**
  * Represents an interface between the {@link Customer} DTO and the underlying database table.
@@ -35,6 +36,9 @@ public class CustomerDAO {
 	
 	@PersistenceUnit()
 	private EntityManagerFactory entityManagerFactory;
+	
+	@Autowired
+	AccountDAO accountDao;
 	
 //	public Integer login(String userName, String password) {
 //		String query = "SELECT id, first_name, last_name, username, password, email, phone FROM customer WHERE username = " + "'"+userName+"'";
@@ -169,11 +173,15 @@ public class CustomerDAO {
 //		String sql = "FROM CustomerRecord WHERE id = :id";
 //		TypedQuery<CustomerRecord> query = entityManager.createQuery(sql, CustomerRecord.class);
 //		query.setParameter("id", c.getCustomerId());
-		CustomerRecord newRecord = new CustomerRecord(c.getUserName(), hashedPassword, c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());
+		CustomerRecord newRecord = new CustomerRecord(c.getUserName(), hashedPassword, c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());	
 		entityManager.getTransaction().begin();
 		entityManager.persist(newRecord);
 		entityManager.getTransaction().commit();
 		entityManager.close();
+		// Add new account
+		c.setCustomerId(newRecord.getCustomerId());
+		Account newAccount = new Account(null, RandomStringUtils.random(9, "1234567890"), RandomStringUtils.random(16, "1234567890"), 500.00, 25.00, c.getCustomerId());
+		accountDao.addAccount(newAccount);
 //		template.update(query, c.getFirstName(), c.getLastName(), c.getUserName(), hashedPassword, c.getEmail(), c.getPhone());
 		
 		//create account for the new customer
@@ -206,8 +214,8 @@ public class CustomerDAO {
 //			query = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, phone = ? WHERE id = ?";
 			//check if customer wants to set new password and hash the new password if so
 			if(c.getNewPassword() != null) {
-				System.out.println("Password: " + customer.getNewPassword());
-				String hashedNewPassword = passwordEncoder.encode(customer.getNewPassword());
+				System.out.println("Password: " + customer.getPassword());
+				String hashedNewPassword = passwordEncoder.encode(customer.getPassword());
 				c.setUserName(customer.getUserName());
 				c.setFirstName(customer.getFirstName());
 				c.setLastName(customer.getLastName());

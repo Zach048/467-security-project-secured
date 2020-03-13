@@ -23,9 +23,9 @@ public class AccountRecord {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer accountId;
-	@Column(name = "checking_account")
+	@Column(name = "checking_account", length = 255)
 	private String checkingAccount;
-	@Column(name = "credit_card")
+	@Column(name = "credit_card", length = 255)
 	private String creditCard;
 	@Column(name = "checking_balance")
 	private Double checkingBalance;

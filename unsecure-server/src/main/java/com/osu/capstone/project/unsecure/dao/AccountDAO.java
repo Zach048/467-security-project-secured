@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -64,7 +66,11 @@ public class AccountDAO {
 		query.setParameter("customer", c);
 		AccountRecord account = query.getSingleResult();
 		entityManager.close();
-		return new Account(account);
+		Account a = new Account(account);
+//		a.setCheckingAccount(a.getCheckingAccount());
+//		a.setCheckingBalance(a.getCheckingBalance());
+//		a.setCreditCard(a.getCreditCard());
+		return a;
 		
 		/*
 		a.setCheckingAccount(encrypt(a.getCheckingAccount()));
@@ -80,6 +86,7 @@ public class AccountDAO {
 	}
 	public void addAccount(Account a) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		System.out.println("Customer id: " + a.getCustomerId());
 		CustomerRecord c = (CustomerRecord)entityManager.find(CustomerRecord.class, a.getCustomerId());
 		AccountRecord newRecord = new AccountRecord(a.getCheckingAccount(), a.getCreditCard(), a.getCheckingBalance(), a.getCreditCardBalance(), c);
 		entityManager.getTransaction().begin();
@@ -117,4 +124,5 @@ public class AccountDAO {
 		// add credit card payment to customer's transactions
 		transactionsDao.addTransaction(creditCardPayment);
 	}
+	
 }
