@@ -37,10 +37,8 @@
 [SQL Code Injection](#injection-mit)   
 [Broken Authentication](#encryption-mit)  
 [Sensitive Data Exposure](#dataexp-mit)  
-[Broken Access Control](#access-mit)  
-[Security Misconfiguration](#misconfig-mit)  
-[Cross-Site Scripting (XSS)](#xss-mit)  
-[Using Components with Known Vulnerabilities](#outdated-mit)  
+[Broken Access Control](#access-mit)   
+[Cross-Site Scripting (XSS)](#xss-mit)   
 [Insufficient Logging and Monitoring](#logging-mit)
 
 ## Defining Security Vulnerabilites
@@ -420,10 +418,6 @@ The Bank of Privacy employs methods on the front-end, back-end, and in between t
 
 The Bank of Privacy uses sessions in order to prevent accounts from being accessed without authorization.  Additionally, routes in the application do not employ the use of parameters to pass the user id to one another, thereby adding an additional layer of protection against broken access to user data. The login page and new user registration page are accessible without the creation of a session, which occurs after a user enters a correct username and password combination to log into an account.  Once logged into an account, a user can access the dashboard, view their transactions, pay their credit card bill, and update their personal information.  When a user logs out of the account, the session is terminated and the user must present their credentials again in order to regain access to the pages beyond the login screen.  The new user registration page is meant to be accessed from a button on the login page but can also be accessed directly via URL, so when the page is loaded it automatically makes sure that there is no current session in order to prevent the possible contamination of data submitted in the form.
 
-<a name="misconfig-mit"/>
-
-### Security Misconfiguration  
-
 <a name="xss-mit"/>
 
 ### Cross Scripting Attack  
@@ -434,10 +428,6 @@ To mitigate XSS attacks, the Bank of Privacy opted to use the Angular framework 
 
 Sanitization is the inspection of an untrusted value, turning it into a value that's safe to insert into the DOM. Angular sanitizes untrusted values for HTML, styles, and script tags. Angular also has a  HttpClient library that recognizes this convention and automatically strips the string ")]}',\n" from all responses before further parsing. Angular prints a console warning when it has to change a value during sanitization and prevents the attack from occurring before it executes. Angular even furthers its security measures by escaping scripting tags when utilizing its data binding feature. Even if the BankofPrivacy’s banner printing “Welcome” followed by the customer’s name were binded by HTML rather than data sent by the database, it would have still prevented the attack. Angular recognizes the script tag as unsafe and automatically sanitizes it, which removes the <script> tag but keeps safe content such as the <p> elements. As a second layer, you can implement router parameters for whether or not a given route requires authorization, and not display it until and unless an authorization check returns positively
 
-
-<a name="outdated-mit"/>
-
-### Using Components with Known Vulnerabilities
 
 <a name="logging-mit"/>
 
