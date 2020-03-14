@@ -1,0 +1,25 @@
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h5 class="card-title text-center">The Bank of Privacy/<a href="http://flip2.engr.oregonstate.edu:8887/">The Bank of Piracy</a></h5>
+              <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <input type="text" id="username" class="form-control" placeholder="Username" formControlName="username" [(ngModel)]="loginForm.username">
+                </div>
+                <p></p>
+                <div class="form-group">
+                  <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" [(ngModel)]="loginForm.password">
+                </div>
+                <p></p>
+                <button [disabled]="!loginForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+              </form>
+            </div>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="btn" (click)="register()">New User Registration</button>
+        </div>
+      </div>
+  </div>
+</body>

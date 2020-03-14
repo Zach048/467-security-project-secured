@@ -1,0 +1,23 @@
+<app-navigation></app-navigation>
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <form class="col-6" [formGroup]="creditForm" (ngSubmit)="onSubmit()">
+      <ul class="list-group">
+        <li class="list-group-item">Checking Account: {{ acctNum }}</li>
+        <li class="list-group-item">Checking Account Balance: {{ account.checkingBalance | currency }}</li>        
+        <li class="list-group-item">Credit Card: {{ credNum }}</li>
+        <li class="list-group-item">Credit Card Balance: {{ account.creditCardBalance | currency }}</li>
+      </ul>
+      <br>
+      <div class="form-group">
+        <label>Payment Amount</label>
+        <div class="dollar">
+        <input type="number" class="form-control" formControlName="creditCardPayment" placeholder="0.00" [(ngModel)]="creditForm.value.creditCardPayment" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <button *ngIf="hideButton==false" [disabled]="!creditForm.valid" type="submit" class="btn btn-primary btn-block">Submit Payment</button>
+      </div>
+    </form>  
+  </div>
+</div>
