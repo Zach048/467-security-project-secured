@@ -3,6 +3,7 @@ import { AccountService } from '../account.service';
 import { PaymentService } from '../payment.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
+import { environment } from 'src/environments/environment';
 //import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router'
 })
 export class CreditcardComponent implements OnInit {
   public account = {};
-  _url = 'http://localhost:8080/account/payCreditCard/';
+  _url = environment.API_URL+'account/payCreditCard/';
   hideButton = false;
   submitted = false;
   acctBal;

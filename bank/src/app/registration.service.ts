@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationService {
 
-  _update_url = 'http://localhost:8080/customer/update';
-  _register_url = 'http://localhost:8080/customer/new';
+  _update_url = environment.API_URL+'customer/update';
+  _register_url = environment.API_URL+'customer/new';
   httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
   constructor(private _http: HttpClient) { }

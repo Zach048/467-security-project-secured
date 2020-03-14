@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  _login_url = 'http://localhost:8080/customer/login/';
-  _register_url = 'http://localhost:8080/customer/new/';
+  _login_url = environment.API_URL+'customer/login/';
+  _register_url = environment.API_URL+'customer/new/';
   httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
   private customerId = new BehaviorSubject<String>(localStorage.getItem('customerId'));
   currentId = this.customerId.asObservable();

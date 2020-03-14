@@ -1,0 +1,28 @@
+2020-03-11 22:59:03,751 INFO o.s.b.StartupInfoLogger [restartedMain] Starting UnsecureApplication on Zachs-Mac.local with PID 12369 (/Users/owner1/cs467/467-security-project-secured/unsecure-server/target/classes started by owner1 in /Users/owner1/cs467/467-security-project-secured/unsecure-server)
+2020-03-11 22:59:03,752 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2020-03-11 22:59:04,153 INFO c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Post-processing PropertySource instances
+2020-03-11 22:59:04,158 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2020-03-11 22:59:04,158 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-03-11 22:59:04,158 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-03-11 22:59:04,158 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2020-03-11 22:59:04,159 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2020-03-11 22:59:04,159 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2020-03-11 22:59:04,159 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-03-11 22:59:04,159 INFO c.u.j.EncryptablePropertySourceConverter [restartedMain] Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-03-11 22:59:04,170 INFO c.u.j.f.DefaultLazyPropertyFilter [restartedMain] Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2020-03-11 22:59:04,191 INFO c.u.j.r.DefaultLazyPropertyResolver [restartedMain] Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2020-03-11 22:59:04,192 INFO c.u.j.d.DefaultLazyPropertyDetector [restartedMain] Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2020-03-11 22:59:04,374 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-11 22:59:04,375 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2020-03-11 22:59:04,375 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-03-11 22:59:04,388 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2020-03-11 22:59:04,504 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-11 22:59:04,515 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-15 - Starting...
+2020-03-11 22:59:04,515 WARN c.z.h.u.DriverDataSource [restartedMain] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2020-03-11 22:59:04,974 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-15 - Start completed.
+2020-03-11 22:59:04,975 INFO o.h.d.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-11 22:59:05,454 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-11 22:59:05,825 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2020-03-11 22:59:05,830 INFO o.s.b.StartupInfoLogger [restartedMain] Started UnsecureApplication in 2.196 seconds (JVM running for 2896.105)
+2020-03-11 22:59:27,035 INFO c.z.h.HikariDataSource [RMI TCP Connection(3)-127.0.0.1] HikariPool-15 - Shutdown initiated...
+2020-03-11 22:59:27,047 INFO c.z.h.HikariDataSource [RMI TCP Connection(3)-127.0.0.1] HikariPool-15 - Shutdown completed.
