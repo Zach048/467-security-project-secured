@@ -27,10 +27,10 @@
 
 ##### IV. Security Vulnerability Exploit Attacks   
 
-[Cross Scripting Attack](#xss-attack)  
-[SQL Code Injection](#injection-attack)  
+[SQL Code Injection](#injection-attack)    
 [Broken Authentication](#passwords-attack)  
-[Broken Access Control](#access-attack)  
+[Cross Scripting Attack](#xss-attack)   
+[Broken Access Control](#access-attack)    
 
 ##### V. Security Vulnerability Mitigations  
 
@@ -141,7 +141,6 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### OWASP Zap Scanning Results: Bank of Privacy
 
-
 ## Security Vulnerability Exploit Attacks
 
 <a name="injection-attack"/>
@@ -164,15 +163,19 @@ The Bank of Piracy leaves user data at risk by failing to protect against accoun
 
 <a name="xss-attack"/>
 
-### Cross Scripting Attack   
+### Cross Scripting Attack (XSS Attack)
 
-##### Angular Dom Sanitization   
+Now that our attacker has successfully injected malicious SQL code to access virtually all of the Bank of Piracy's data, he can login to a customer’s account to inject malicious Javascript to potentially derive even more sensitive information like credit cards and accounts from other banks, passwords to social media accounts, employer secrets, etc. To accomplish this, he takes a play from even more experienced exploiters’ playbooks by observing how his parents, friends, and generally how anybody usually fall victim to these attacks – through popups displaying a warning that their computers have been infected with a virus that download their own virus disguised to resolve the façade that never actually existed by clicking a button. According to OWASP, this type of XSS attack is categorized as stored attacks, the injected script is permanently stored on the target servers, such as in a database in this case. The victim then retrieves the malicious script from the server when it requests the stored information. Stored XSS is also sometimes referred to as Persistent or Type-I XSS.
 
-##### Bypassing Dom Sanitizer   
+The attacker is going to use a similar attack based off this design, he’s going to use the following HTML which creates a modal displaying message that their bank account has been compromised for fraud and that the customer needs to contact the number displayed immediately and use the software downloaded on their computer to resolve the issue:
 
-##### Parameterized XSS Attack  
+```<dialog open><p>Your account is being investigated for fraud, please call 555-555-5555 and use the software downloaded.</p><a href = "/file.txt" download = "file.txt"><button>Ok</button></a></dialog>```
 
 ##### XSS Attack By Updating Customer  
+
+To execute this attack, he logs in using the passwords he cracked earlier then injects his script in the field used to update the customer since it will redirect back to the dashboard where he can display the modal as soon as the customer logs in:
+
+
 
 ## Security Vulnerabilty Mitigations 
 
