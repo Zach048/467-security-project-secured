@@ -195,6 +195,53 @@ The attacker has successfuly acquired all of the Bank of Piracy's usernames and 
 
 ### Broken Authentication 
 
+In the previous scenario, our hacker had injected a malformed SQL query into the search box of the Bank of Piracy application to steal not only other customers’ credit cards and checking account information but their hashed passwords as well. A Harris Poll conducted in August of 2019, found that 75 percent of its 3,419 respondents from 12 states struggle to remember their passwords, and this leads them to make poor security choices such as reusing passwords (66 percent); sharing passwords (43 percent); using common passwords such as “abc123,” “Iloveyou,” and “Qwerty” (24 percent); and using easy-to-guess personal information such as birthdays and names of relatives (including themselves) as part of their passwords (59 percent). Therefore, at least according to this research, there should be approximately ~59% customers that have poorly thought up extremely unsecure common passwords. 
+
+Our hacker decides to put this theory to the test, he quickly performs a search on Google to see what software is highly recommended by information security professionals to crack passwords. On the first page, he finds a Kali Linux tool called Hashcat which Infosec Resources even provides a tutorial for beginners. Hashcat is a well-known password cracker, it is designed to break even the most complex passwords. To do this, it enables the cracking of a specific password in multiple ways, combined with versatility and speed. The BankofPiracy’s passwords are associated with SHA1 hash keys, this is a mathematical operation that is easy to perform, but very difficult to reverse engineer. Hashcat turns readable data into a garbled state (this is a random string of fixed length size). Hashes do not allow someone to decrypt data with a specific key, as standard encryption protocols allow. Hashcat uses precomputed dictionaries, rainbow tables, and even a brute-force approach to find an effective and efficient way crack passwords. 
+
+#### Dictionary Attack
+
+The simplest way to crack a hash is to try first to guess the password. Each attempt is hashed and then is compared to the actual hashed value to see if they are the same. Dictionary and brute-force attacks are the most common ways of guessing passwords. These techniques make use of a file that contains words, phrases, common passwords, and other strings that are likely to be used as a viable password. Our hacker follows the tutorial and opts to use a dictionary attack, to use it, he needs a wordlist. It just so happens that Kali Linux has a number of wordlists built right into it and all he has to is type in the terminal:
+
+``` hashcat -a 0 -m 100 -o ~/output.txt ~/Desktop/passwords.txt ~/usr/share/wordlist/rockyou.txt ```
+
+- -m 100 designates the type of hash we are cracking (SHA1)
+- -a 0 designates a dictionary attack
+- -o output.txt is the output file for the cracked passwords
+- passwords.txt is our input file of hashed passwords
+- /usr/share/wordlists/rockyou.txt
+is the absolute path to the wordlist file for this dictionary attack and is highly recommended since it is a fairly lightweight yet powerful wordlist compared to other choices.
+
+The result of output.txt:
+
+```
+7c4a8d09ca3762af61e59520943dc26494f8941b:123456
+5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8:password
+5bc1824930ffbbafc27e7eb204260a4017859a35:ferrari
+6a4fe8b1c615ce704e72e4b450b3325eb022492e:zachary
+d0be2dc421be4fcd0172e5afceea3970e2f3d940:apple
+cbfdac6008f9cab4083784cbd1874f76618d2a97:password123
+6751bd9db11552b8ebc844059420b65a308015fa:blueberry
+1f6ccd2be75f1cc94a22a773eea8f8aeb5c68217:pizza
+23871edd97b628faca29e9328806c1514d289e88:penguins
+a51dda7c7ff50b61eaea0444371f4a6a9301e501:john
+048ab27836e54e815a07ad3e2ad43e4cd71efba2:kobebryant
+f661e87dcaab9d2db81bb649be345e361c54ba9b:buckeyes
+2d3b814856a4914292468ff54442afbe921287dd:tombrady12
+ea9355e059ee52d22d6b147442545eb5d6fe30d3:dolphins13
+f7408171b988450b85755c5273c6e829f19345e8:Scarface
+eebf26b3016b7fa7dff2a18962d32e0dfd78f388:Steelers
+2b3e371486dee4f954150c7863877108b7d4881d:kingjames23
+68a57310886ef9df2b555a9d94950132059f7276:Patriots
+5646f044750172cde4597f35e9fa11162a7a9781:iamtoocool
+3af479a81aa396f8e3a353fa2d9f7d68919aed18:chicagobulls23
+2e7b153d82dc47a055b16f652bfe04b0a16b5d95:September24
+948a417461ea05242c48f2f4b224e52b70a27c40:therock34
+b358486187ed10ab2ba622e449f664a72d3453e2:Reds
+```
+
+The attacker has the passwords to every customer in the Bank of Piracy and can break into their accounts effortlessly.
+
 <a name="dataexp-mit"/>
 
 ### Sensitive Data Exposure
@@ -232,6 +279,117 @@ The customer is redirected to the dashboard where his snapshot info is obstructe
 <a name="injection-mit"/>
 
 ### SQL Code Injection
+
+In order to understand how to mitigate SQL injection, we must first grasp the concepts as to what makes a web application vulnerable to SQL injection in the first place. When breaking down our hacker’s SQL injection attack, we explained how commenting out the rest of the intended query (--) permits our hacker to combine multiple SELECT statements with UNION into a single result set. Why was our hacker able to do this? Examine the following code to search for a particular transaction that our hacker exploited: 
+
+```javascript
+app.get('/search/:id', (req, res, next) => {
+    let context = {};
+    let query = "SELECT * FROM transactions WHERE account_id = " + req.params.id + " AND vendor_name LIKE " + "'%"+req.query.vendor+"%'";
+    pool.query(query, (err, result) => {
+        if(err) {
+            next(err);
+            return;
+        }
+        context.transactions = result;
+        res.render('transactions', context);
+    });
+});
+```
+
+When you use string concatenation to build an SQL query, you're making a mistake. This mistake is treating the query and the parameters of the query as if they were the same. A query is code; it is run and it can do things: it can modify tables and rows and so on. The parameters, however, are simple data. They just represent a static value. When you mistakenly treat user input as if it is safe code, you get SQL injection. Using prepared queries and treating user input as potentially unsafe data prevents this particular attack. In short, our hacker used “’ UNION(SELECT password, email, 3 FROM customer) -- “ as a string concatenated to the query resulting in:
+
+``` SELECT id, vendor_name, amount_paid FROM transactions WHERE account_id = " + req.params.id + " AND vendor_name LIKE " + "'%’ UNION(SELECT password, email, 3 FROM customer) -- %'"```
+
+#### Object/Relational Mapping (ORM)
+
+In object oriented systems, we represent entities as objects, and use a database to persist those objects. Generally these objects are considered non-scalar values (non-primitive types). But many databases can only store and manipulate scalar values organized in tables. The crux of the problem is translating those objects to forms which can be stored in the database, and which can later be retrieved easily, while preserving the properties of the objects and their relationships; these objects are then said to be persistent. Hibernate attempts to address this problem with Object/Relational Mapping by mapping attributes of objects we wish to persist to columns of a database. In the BankofPrivacy , this identifier will be mapped using class objects using active record patterns in conjunction with Java Spring Boot annotations, you will see this mapping in the element. This file will also map all other object properties we wish to preserve to columns in a database table, along with their data types and other attributes. Observe the code below for AccountRecord which creates to the account table in the database:
+
+```javascript
+@Entity
+@Table(name = "account")
+public class AccountRecord {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer accountId;
+	@Column(name = "checking_account")
+	private String checkingAccount;
+	@Column(name = "credit_card")
+	private String creditCard;
+	@Column(name = "checking_balance")
+	private Double checkingBalance;
+	@Column(name = "credit_card_balance")
+	private Double creditCardBalance;
+	@OneToOne(optional = false, cascade= CascadeType.ALL)
+	@JoinColumn(name = "customer_id")
+	private CustomerRecord customer;
+```
+
+This code is followed by the constructor, getters, and setters that we use to set and get data from our active records. At this point, you are likely scratching your head pondering why this has anything to do with mitigating SQL injection. Lets compare code on how the BankofPiracy gets transactions compared to the Bank of Privacy:
+
+The Bank of Piracy:
+
+```javascript
+app.get('/transactions/:id', (req, res, next) => {
+    let context = {};
+    let query = "SELECT t.id, t.vendor_name, t.amount_paid FROM transactions t INNER JOIN account a ON t.account_id = a.id WHERE a.customer_id = " + req.params.id;
+    pool.query(query, (err, result) => {
+        if(err) {
+            next(err);
+            return;
+        }
+        context.transactions = result;
+        context.id = req.params.id;
+        res.render('transactions', context);
+    });
+});
+```
+The Bank of Privacy:
+
+```javascript
+public List<Transactions> getTransactions(Integer customerId) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CustomerRecord c = (CustomerRecord)entityManager.find(CustomerRecord.class, customerId);
+		entityManager.detach(c);
+		String sql = "FROM TransactionsRecord t WHERE t.account.customer = “+ customer;
+		TypedQuery<TransactionsRecord> query = entityManager.createQuery(sql, TransactionsRecord.class);
+		query.setParameter("customer", c);
+		List<TransactionsRecord> t = query.getResultList();
+		List<Transactions> transactions = new ArrayList<>();
+		for (int i = 0; i < t.size(); i++) {
+			transactions.add(new Transactions(t.get(i)));
+		}
+		entityManager.close();
+		return transactions;
+	}
+```
+
+Now that you’ve observed and hopefully digested this code, it should be fairly obvious as to what the differences are and why ORM mitigates SQL injection. Think back to when our hacker was brainstorming and theorizing how to inject malformed SQL code, he was visualizing SQL queries. Unless he would theorize that the server must be using Hibernate object relational mapping in conjunction with HQL on their backend, he would not know how to visualize this query. Moreover, when the attack used the UNION query to combine the data of all table name information in the three columns, this would have not been possible since there’s information.table schema in Hibernate. Nonetheless, as OWASP recommends Hibernate for its guards against SQL injection, it also points out that Hibernate does not grant immunity to SQL Injection, one can misuse the API as they please. Examining our method above, it appears that we still use string concatenation to build an HQL query.
+
+#### Parameterized Queries 
+
+For purposes of strengthening our security measures, let’s assume our attacker is actually a seasoned Java developer with experience in architecting ORM and therefore knows how to send a nefarious HQL query to the server. How would we the BankofSecurity mitigate this attack? In short, parameterized queries enforce data typed user input to be used as parameters embedded in the SQL/HQL statement:
+
+```javascript
+public List<Transactions> getTransactions(Integer customerId) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CustomerRecord c = (CustomerRecord)entityManager.find(CustomerRecord.class, customerId);
+		entityManager.detach(c);
+		String sql = "FROM TransactionsRecord t WHERE t.account.customer = :customer";
+		TypedQuery<TransactionsRecord> query = entityManager.createQuery(sql, TransactionsRecord.class);
+		query.setParameter("customer", c);
+		List<TransactionsRecord> t = query.getResultList();
+		List<Transactions> transactions = new ArrayList<>();
+		for (int i = 0; i < t.size(); i++) {
+			transactions.add(new Transactions(t.get(i)));
+		}
+		entityManager.close();
+		return transactions;
+	}
+  ```
+  
+As you can observe, query.setParameter(“customer”, c) enforces the parameter :customer as a CustomerRecord data type. If our attacker would have sent the malformed query as he did when exploiting the search box in the web app then it was just be viewed as a string data type and returned no results which is why his interest was piqued when he sent a single quote. The Bank of Privacy now uses ORM in conjunction with parameterized queries as well as limited permissions on the MySQL database server to mitigate SQL injection. 
+
 
 <a name="encryption-mit"/>
 
