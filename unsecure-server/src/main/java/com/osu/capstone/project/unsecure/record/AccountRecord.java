@@ -15,7 +15,11 @@ import javax.persistence.Table;
 
 /**
  * @author Zach Earl
- *
+ ** Represents a single account record in the MySQL relational database.
+ * Interaction with the underlying database (saving, loading) can be achieved 
+ * through the {@link AccountDAO} class.
+ * RESTful API endpoints for this object are available through the
+ * {@link AccountController} class.
  */
 @Entity
 @Table(name = "account")

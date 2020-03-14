@@ -5,22 +5,12 @@ package com.osu.capstone.project.unsecure.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Base64;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
-
-import org.jasypt.util.text.BasicTextEncryptor;
-
 import com.osu.capstone.project.unsecure.dto.Account;
 import com.osu.capstone.project.unsecure.dto.Transactions;
 import com.osu.capstone.project.unsecure.record.AccountRecord;
@@ -34,22 +24,6 @@ import com.osu.capstone.project.unsecure.record.CustomerRecord;
 @Repository
 public class AccountDAO {
 	
-	public String encrypt(String toEncrypt) {
-		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-		textEncryptor.setPassword("${jasypt.encryptor.password}");
-		return textEncryptor.encrypt(toEncrypt);
-	}
-	
-
-	public String decryption(String toDecrypt) {
-		BasicTextEncryptor textDecryptor = new BasicTextEncryptor();
-		textDecryptor.setPassword("${jasypt.encryptor.password}");
-		return textDecryptor.decrypt(toDecrypt);
-		
-	}
-	
-	@Autowired
-	private JdbcTemplate template;
 	
 	@Autowired 
 	private TransactionsDAO transactionsDao;
@@ -67,21 +41,8 @@ public class AccountDAO {
 		AccountRecord account = query.getSingleResult();
 		entityManager.close();
 		Account a = new Account(account);
-//		a.setCheckingAccount(a.getCheckingAccount());
-//		a.setCheckingBalance(a.getCheckingBalance());
-//		a.setCreditCard(a.getCreditCard());
 		return a;
 		
-		/*
-		a.setCheckingAccount(encrypt(a.getCheckingAccount()));
-		a.setCreditCard(encrypt(a.getCreditCard()));
-		System.out.println("Encrypted Account: " + a.getCheckingAccount());
-		System.out.println("Encrypted Card: " + a.getCreditCard());
-		a.setCheckingAccount(b.decrypt(a.getCheckingAccount()));
-		a.setCreditCard(b.decrypt(a.getCreditCard()));
-		System.out.println("Decrypted Account: " + a.getCheckingAccount());
-		System.out.println("Decrypted Card: " + a.getCreditCard());
-		*/
 		
 	}
 	public void addAccount(Account a) {

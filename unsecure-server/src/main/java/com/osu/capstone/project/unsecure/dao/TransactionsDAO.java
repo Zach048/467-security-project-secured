@@ -8,15 +8,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.osu.capstone.project.unsecure.dto.Transactions;
 import com.osu.capstone.project.unsecure.record.AccountRecord;
@@ -30,12 +25,10 @@ import com.osu.capstone.project.unsecure.record.TransactionsRecord;
 @Repository
 public class TransactionsDAO {
 	
-	@Autowired
-	private JdbcTemplate template;
-	
 	@PersistenceUnit()
 	private EntityManagerFactory entityManagerFactory;
 	
+	// get customer's transactions
 	public List<Transactions> getTransactions(Integer customerId) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		CustomerRecord c = (CustomerRecord)entityManager.find(CustomerRecord.class, customerId);
@@ -46,20 +39,22 @@ public class TransactionsDAO {
 		List<TransactionsRecord> t = query.getResultList();
 		List<Transactions> transactions = new ArrayList<>();
 		for (int i = 0; i < t.size(); i++) {
-			transactions.add(new Transactions(t.get(i)));
+			transactions.add(new Transactions(t.get(i))); // add TransactionsRecord to associated DTO
 		}
 		entityManager.close();
 		return transactions;
 	}
+	// add transactions 
 	public void addTransaction(Transactions t) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		AccountRecord a = (AccountRecord) entityManager.find(AccountRecord.class, t.getAccountId());
+		AccountRecord a = (AccountRecord) entityManager.find(AccountRecord.class, t.getAccountId()); // get AccountRecord by id
 		TransactionsRecord newRecord = new TransactionsRecord(a, t.getVendorName(), t.getAmountPaid());
 		entityManager.getTransaction().begin();
 		entityManager.persist(newRecord);
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
+	// update transactions
 	public void updateTransaction(Transactions t) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		TransactionsRecord transaction = (TransactionsRecord) entityManager.getReference(TransactionsRecord.class, t.getTransactionId());

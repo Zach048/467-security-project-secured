@@ -11,6 +11,7 @@
 	<groupId>com.osu.capstone.project</groupId>
 	<artifactId>unsecure</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>unsecure</name>
 	<description>Capstone Project</description>
 
@@ -60,6 +61,12 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
@@ -71,12 +78,6 @@
 		<dependency> 
 			<groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-crypto</artifactId> 
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
-		<dependency>
-		    <groupId>com.github.ulisesbocchio</groupId>
-		    <artifactId>jasypt-spring-boot-starter</artifactId>
-		    <version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -117,6 +118,7 @@
 	</dependencyManagement>
 
 	<build>
+	<finalName>securedbankservice</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

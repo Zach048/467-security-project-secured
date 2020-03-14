@@ -10,6 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Zach Earl
+ *
+ * Represents a single transactions record in the MySQL relational database.
+ * Interaction with the underlying database (saving, loading) can be achieved 
+ * through the {@link TransactionsDAO} class.
+ * RESTful API endpoints for this object are available through the
+ * {@link TransactionsController} class.
+ */
 @Entity
 @Table(name = "transactions")
 public class TransactionsRecord {
