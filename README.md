@@ -23,8 +23,9 @@
 1. Make sure you have pulled code from GitHub
 2. Download Angular CLI: https://cli.angular.io
 3. Open terminal (or another command line interface) and navigate to 'bank' directory
-4. Type 'ng serve' in the command line to run the server
-5. Go to 'http://localhost:4200' in your browser
+4. Type 'npm install' in the command line to install node modules
+5. Type 'ng serve' in the command line to run the server
+6. Go to 'http://localhost:4200' in your browser
 ###### Optional: 
 *Follow these instructions to open the project from the command line using Visual Studio Code: https://code.visualstudio.com/docs/setup/mac or https://code.visualstudio.com/docs/editor/command-line*
 
