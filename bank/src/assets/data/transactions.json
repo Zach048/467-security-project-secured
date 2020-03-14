@@ -1,9 +1,0 @@
-[
-   {"transactionId": 1, "accountId": 1, "vendorName": "Vandalay Industries", "amountPaid": 123.45},
-   {"transactionId": 2, "accountId": 1, "vendorName": "Visa", "amountPaid": 200.00},
-   {"transactionId": 3, "accountId": 1, "vendorName": "Starbucks", "amountPaid": 5.45},
-   {"transactionId": 4, "accountId": 1, "vendorName": "Costco", "amountPaid": 323.90},
-   {"transactionId": 5, "accountId": 1, "vendorName": "Chipotle", "amountPaid": 9.26},
-   {"transactionId": 6, "accountId": 1, "vendorName": "BP", "amountPaid": 45.98},
-   {"transactionId": 7, "accountId": 1, "vendorName": "Amazon", "amountPaid": 162.34}
-]
