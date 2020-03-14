@@ -395,7 +395,18 @@ As you can observe, query.setParameter(“customer”, c) enforces the parameter
 
 ### Broken Authentication
 
-On the back-end of the application the password is encrypted using Bcrypt, a one-way slow hashing method that takes a plaintext password and hashes it with salt, a unique random string added to the password prior to hashing, in ordered to further obfuscate the password and protect against rainbow table attacks.  The one-way nature of Bcrypt's password hashing means that password verification is completed by hashing the user-entered password and checking if it is a match for the hashed password stored in the database rather than decrypting the password stored in the database and seeing if it matches the user-entered plaintext value.
+The encryption that the BankofPiracy used was SHA-1 which is fairly standard encryption, Google states they hope their practical attack on SHA-1 cements that the protocol should no longer be considered secure and will finally convince the industry that it is urgent to move to safer alternatives such as SHA-256. Google generated a cryptographic collision, and then professed that moving forward, it’s more urgent than ever for security practitioners to migrate to safer cryptographic hashes such as SHA-256 and SHA-3. The fact that our attacker could use Hashcat to perform a dictionary attack on the BankofPiracy’s hashed passwords is due to a lack of strong password policy and encryption 
+
+#### Password Policy
+
+Passwords should be at least eight (8) characters long, combining this length with complexity makes a password difficult to guess and/or brute force such as the dictionary attack used before. Additionally, Password characters should be a combination of alphanumeric characters. Alphanumeric characters consist of letters, numbers, punctuation marks, mathematical and other conventional symbols. You should not store the actual passwords to protect against brute forcing if the database file is compromised. The BankofPrivacy follows these guidelines set forth, customers must now enter a 8 character password consisting of at least one uppercase alphabetic character, lowercase alphabetic character, numeric character, and a special character. The passwords the attacker cracked did not follow this new policy set forth, this in addition to them being a weakly encrypted using SHA-1 is why they were compromised.
+
+#### Encryption with Salt 
+
+With unsalted hashed passwords, the attacker could try a dictionary attack. Using a pre-arranged listing of words, such as the entries from the English dictionary, with their computed hash, the attacker easily compares the hashes from a stolen passwords table with every hash on the list. If a match is found, the password then can be deduced which is exactly what our password cracker did. To mitigate the damage dictionary attack could do, we salt the passwords. According to OWASP Guideliness, a salt is a fixed-length cryptographically-strong random value that is added to the input of hash functions to create unique hashes for every input, regardless of the input not being unique. A salt makes a hash function look non-deterministic, which is good as we don't want to reveal password duplications through our hashing. 
+
+On the back-end of the application the password is encrypted using Bcrypt, a one-way slow hashing method that takes a plaintext password and hashes it with salt, a unique random string added to the password prior to hashing, in ordered to further obfuscate the password and protect against dictionary or rainbow table attacks. The one-way nature of Bcrypt's password hashing means that password verification is completed by hashing the user-entered password and checking if it is a match for the hashed password stored in the database rather than decrypting the password stored in the database and seeing if it matches the user-entered plaintext value. SHA-1 is a cryptographic hash while bcrypt is a password hash or PBKDF (password based key derivation function). SHA-1 has been designed to be fast. You don't want any delays when validating a signature, for instance. There is no reason for generic cryptographic hashes to be slow. Bcrypt on the other hand is a password hash that performs key strengthening on the input. Basically it does this by slowing down the calculation so that attackers will have to spend more resources to find the input by brute forcing or dictionary attacks. The idea is that although the legit users will also be slowed down, they are only slowed down once per password. However the attackers are slowed down for each try. The legit user is of course much more likely to input the right password first. Furthermore bcrypt also contains a salt as input, which can be used to avert rainbow table attacks as well:
+
 
 <a name="dataexp-mit"/> 
 
@@ -417,12 +428,60 @@ The Bank of Privacy uses sessions in order to prevent accounts from being access
 
 ### Cross Scripting Attack  
 
+To mitigate XSS attacks, the Bank of Privacy opted to use the Angular framework which provides DOM sanitization and a content security policy. To systematically block XSS bugs, Angular treats all values as untrusted by default. When a value is inserted into the DOM from a template, via property, attribute, style, class binding, or interpolation, Angular sanitizes and escapes untrusted values. When our attacker updated the customer’s name using Javascript code to create a modal to pop up on the dashboard, Angular’s cross scripting model would have prevented this attack since it would escape the <script> tags effectively making them part of the data string being displayed. This also protects against the hazardous eval() method that interprets Javascript as a string which can be concatenated (I know because I tried to break it that way). 
+
+#### Dom Sanitization
+
+Sanitization is the inspection of an untrusted value, turning it into a value that's safe to insert into the DOM. Angular sanitizes untrusted values for HTML, styles, and script tags. Angular also has a  HttpClient library that recognizes this convention and automatically strips the string ")]}',\n" from all responses before further parsing. Angular prints a console warning when it has to change a value during sanitization and prevents the attack from occurring before it executes. Angular even furthers its security measures by escaping scripting tags when utilizing its data binding feature. Even if the BankofPrivacy’s banner printing “Welcome” followed by the customer’s name were binded by HTML rather than data sent by the database, it would have still prevented the attack. Angular recognizes the script tag as unsafe and automatically sanitizes it, which removes the <script> tag but keeps safe content such as the <p> elements. As a second layer, you can implement router parameters for whether or not a given route requires authorization, and not display it until and unless an authorization check returns positively
+
+
 <a name="outdated-mit"/>
 
 ### Using Components with Known Vulnerabilities
 
 <a name="logging-mit"/>
 
-### Logging   
+### Logging 
+
+The Bank of Piracy not only failed to mitigate attacks such as XSS, injection, password cracking, and broken access but also failed to log and then trace back the source of these attacks. In other words, they ultimately failed to maintain record of errors, breaches, and exceptions that could have shed light on what caused these attacks to begin with. If trace logging was implemented, they could have traced which user logged in to the application to inject the nefarious query to fetch the information.table schema that eventually stole the customers’ hashed passwords. The Bank of Privacy equips Apache Log4j2 for its logging framework in its Spring Boot architecture, observe the following configuration file, log4j2.properties:
+
+```
+spring.output.ansi.enabled=ALWAYS
+
+name=PropertiesConfig
+property.filename = logs
+appenders = console, file
+
+appender.console.type = Console
+appender.console.name = STDOUT
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+appender.file.type = File
+appender.file.name = LOGFILE
+appender.file.fileName=${filename}/propertieslogs.log
+appender.file.layout.type=PatternLayout
+appender.file.layout.pattern=%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36}.%M() @%L - %msg%n}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}
+
+loggers=file
+logger.file.name=com.osu.capstone.project.unsecure.log4j2properties
+logger.file.level = debug
+logger.file.appenderRefs = file
+logger.file.appenderRef.file.ref = LOGFILE
+
+rootLogger.level = debug
+rootLogger.appenderRefs = stdout
+rootLogger.appenderRef.stdout.ref = STDOUT
+ 
+log4j.rootLogger=info, stdout
+# basic log level for all messages
+log4j.logger.org.hibernate=info
+ 
+# SQL statements and parameters
+log4j.logger.org.hibernate.SQL=debug
+log4j.logger.org.hibernate.type.descriptor.sql=trace
+```
+
+Log4j2 uses appenders to log output, the Bank of Privacy logs output to the console as well as files in a log directory for one week. Since logging everything to one file is not ideal, we use the rolling file appender to create a log file when it reaches a certain limit based on the default settings. As you can observe in our configuration, we have Hibernate set up for both trace and debug to catch exceptions and trace database transactions which would trace the source of the cause of a malicious attack to the database. 
+
 
 ## References  
