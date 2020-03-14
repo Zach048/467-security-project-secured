@@ -147,6 +147,50 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### SQL Code Injection
 
+An avid hacker could observe the Bank of Piracy application to see if there are any security vulnerabilities that he can exploit and the search bar immediately draws his attention since it fetches data, in this case, customer transactions, from the database then displays those the customer searched for. He believes this may be susceptible to exploitation and thus tests his theory by entering a single quote: “ ‘ “ in the input field of the search bar. This results in a ERR_INVALID_RESPONSE error message which piques his interest since this means that the appropriate security measures are not in place to escape malformed queries else it would simply display no results in the columns. 
+
+He further tests this theory by entering these characters in the search bar: 
+###### Note: *A space needs to be appended at the end of the search for injection to be successful*
+
+```' -- ```
+
+This displays all of his transactions which means that the “’ — ” escaped the rest of the query on the backend thereby getting all of his transactions since no input was entered between the wildcards. He could contemplate his next step by observing there are three columns and visualizes the SQL query on the backend server being: 
+
+```SELECT ?, ?, ? FROM ? WHERE ? LIKE ‘%[input]%’;```
+
+He tests this theory by entering this input:
+
+```’ UNION(SELECT 1, 2, 3 FROM DUAL) -- ```
+
+And is redirected to the transactions page where these results are displayed:
+
+![](images/view_123.png)
+
+As you can observe, the digits 1, 2, 3 are appended to the three columns respectively confirming his theory. The reason why these digits were appended is because the attacker used the UNION clause which is used to combine the result from multiple SELECT statements into a single result set. The result set column names are taken from the column names of the first SELECT statement i.e. the query on the server used to fetch the search results. Now that his theory is confirmed, he can start injecting SQL code to steal customer’s sensitive data such as passwords, checking accounts, and credit cards. However, in order to exploit this, he must find out the names of the tables this data is stored and so he injects this SQL code in the search bar:
+
+```’ UNION(SELECT table_name, 2, 3 FROM information_schema.tables) – ```
+
+This results in the data from the information schema for all the tables that exist in the Bank of Piracy’s database being appended in the three columns after his transactions. Now, he can hypothesize which tables are the ones containing the information he wants and speculates it could be in the ‘customer’ table:
+
+![](images/view_table_names.png)
+
+The attacker now has an idea of what the tables names could be and so now he wants the names to the columns, he enters this query into the search bar:
+
+```’ UNION(SELECT column_name, 2, 3 FROM information_schema.columns WHERE table_name = ‘customer’) – ```
+
+This appends all of the column names from the customer table to the end of his transactions effectively providing Tyrese the information that he was looking for to steal other customers data. As such, he speculates that the columns ‘passwords’ contain the information he wants:
+
+![](images/cust_column_names.png)
+
+With knowledge of the column names, the attack just needs to enter this query in the search bar:
+
+```’ UNION(SELECT username, password, 3 FROM customer) – ```
+
+The attacker has successfuly acquired all of the Bank of Piracy's usernames and hashed passwords in the database:
+
+![](images/view_hashes.png)
+
+
 <a name="passwords-attack"/>
 
 ### Broken Authentication 
@@ -169,13 +213,19 @@ Now that our attacker has successfully injected malicious SQL code to access vir
 
 The attacker is going to use a similar attack based off this design, he’s going to use the following HTML which creates a modal displaying message that their bank account has been compromised for fraud and that the customer needs to contact the number displayed immediately and use the software downloaded on their computer to resolve the issue:
 
-```<dialog open><p>Your account is being investigated for fraud, please call 555-555-5555 and use the software downloaded.</p><a href = "/file.txt" download = "file.txt"><button>Ok</button></a></dialog>```
+```javascript
+<dialog open><p>Your account is being investigated for fraud, please call 555-555-5555 and use the software downloaded.</p><a href = "/file.txt" download = "file.txt"><button>Ok</button></a></dialog>
+```
 
 ##### XSS Attack By Updating Customer  
 
 To execute this attack, he logs in using the passwords he cracked earlier then injects his script in the field used to update the customer since it will redirect back to the dashboard where he can display the modal as soon as the customer logs in:
 
+![](images/update_customer.png)
 
+The customer is redirected to the dashboard where his snapshot info is obstructed by this modal downloading this file when he clicks ok:
+
+![](images/xss_attack.png)
 
 ## Security Vulnerabilty Mitigations 
 
