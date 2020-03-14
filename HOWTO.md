@@ -119,7 +119,10 @@ The Bank of Piracy is the unsecure version of the application.  The front-end of
 
 ### Bank of Privacy
 
-The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  The back-end of the application...
+The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  Angular’s security content policy and DOM sanitization serve to protect against cross site scripting, which was a prevalent vulnerability for The Bank of Piracy application.  There is also far more logic for transmitting data from and receiving information to the front-end through Angular’s ngModel and TypeScript interface.  Communicating with the back-end Spring Boot application is done via HTTPS, which utilizes Transport Layer Security (TLS) to validate the communication protocol and encrypt transmitted data, protecting against man-in-the-middle attacks, eavesdropping, and communications interference.  
+
+The Spring Boot back-end is an open source Java-based framework that employs many plugins and APIs to improve the security features of the application.  The Spring Security plugin is responsible for assisting with user authentication and authorization, and is necessary in order to use the Bcrypt library for slow password hashing with salt.  Spring Tools is useful for editing projects in some of the most popular integrated development environments and keeping files organized within the complex systems architecture.  Java Hibernate API creates the database using object-relational mapping, translating the object-oriented classes into a MySQL relational database.  JPA EntityManager API is used to connect and query the database, making it possible to persist the data for use in the application and merge new data with data currently in the database.  Lastly, Apache Tomcat is used to host the project, which is currently running as an EC2 instance on an AWS Centos server.
+
 
 ## Scanning For Security Vulnerabilities
 
@@ -131,13 +134,36 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
 
+Penetration testing was performed using OWASP’s ZAP tool, which can be downloaded from the above link to the quick start guide.  The guide provides a great deal of information for using the application, and there is very little overhead to get the tests up and running.  The two main forms of testing are the Automated Scan, which can run on its own, and the Manual Explore, which allows the user to interact with a website while accumulating information about the actions they are taking.
+
+To get started with an automated scan, click the automated scan button and then copy the link to the website that you would like to attack into the proper field.  For The Bank of Piracy application it is recommended to also select the option to use the ajaz spider because it is beneficial for deployment with JavaScript-heavy code.  Click the attack button next and watch as scans begin to work their magic, combing through the site to discover weaknesses and vulnerabilities that can be attacked.  Good results can be gathered from automated scans, but the real results come from manual scans that interact with the full functionality of the application.
+
+Running a manual scan is slightly different than an automated scan.  Click the manual explore button and enter the URL of the site you wish to attack.  Ensure that the HUD checkbox is clicked and select either Chrome or Firefox as your preferred browser, although it bears mention that Firefox has proven to deliver a better experience than Chrome.  Hit the launch browser button and a new browser window will open, but be patient as the HUD interface loads.  You can now interact with the website as you normally would and watch as the HUD interface shows weaknesses and vulnerabilities in real time.  You can also run the spider, ajax spider, or active scan at any point in your navigation of the web application.  There is also a button that looks like a crosshair target on the right hand side of the screen that presents an option to turn on attack mode, which will put the application through rigorous testing and do everything it can to attack the application.
+
+
 <a name="unsecureResults"/>
 
 ### OWASP Zap Scanning Results: Bank of Piracy
 
+Results of the penetration tests run on The Bank of Piracy application can be viewed in the image below.  The upper left hand side shows a site tree that was accessed throughout the course of the testing process.  There are also little indicators that show how the sites were reached and what type of alert, if any, were triggered by events from the page.  The bottom left section is the most important as it displays a list of alerts raised throughout the course of the testing, indicating by color the severity of the alert.  The penetration testing of The Bank of Piracy noted 15 alerts, four of them critical, but the most significant numbers are those next to the individual alerts.  Some alerts are not as serious as others and can be triggered simply by accessing the page, while others are severe and require multiple conditions to be met in order for the attack to succeed.  It is critical that measures be taken to understand each of the attacks and how they impact the application so that fixes can be put into place that solve the actual problem and not just a symptom of it.
+
+![](images/unsecure_scan.png)
+
+Included below are images of the MySQL relational database before penetration testing and following many rounds of penetration testing.  The images serve to show how data can be manipulated through the testing process and how the tests can inject information into places where it doesn’t belong.  When designing an application it is important to understand that not every user will use the application as it’s intended, and for that reason there must be contingencies in place to deal with any issues that may arise.
+
+![](images/unsecure_before.png)
+
+![](images/unsecure_after.png)
+
 <a name="secureResults"/>
 
 ### OWASP Zap Scanning Results: Bank of Privacy
+
+Results of the penetration tests run on The Bank of Privacy application can be viewed in the image below.  The upper left hand side shows a site tree that was accessed throughout the course of the testing process.  This tree reaches far more sites than The Bank of Piracy application because the software architecture is far more complex and requires the use of many more components.  Each component used to create the application can leave it susceptible to attack, hence the application is only as strong as its weakest component.  There are also little indicators that show how the sites were reached and what type of alert, if any, were triggered by events from the page.  The bottom left section is the most important as it displays a list of alerts raised throughout the course of the testing, indicating by color the severity of the alert.  The penetration testing of The Bank of Privacy noted 10 alerts, none of them critical, but the most significant numbers are those next to the individual alerts.  Some alerts are not as serious as others and can be triggered simply by accessing the page, while others are severe and require multiple conditions to be met in order for the attack to succeed.  It is critical that measures be taken to understand each of the attacks and how they impact the application so that fixes can be put into place that solve the actual problem and not just a symptom of it.
+
+These results show marked improvement from the initial penetration testing run on The Bank of Piracy application.  None of the alerts are critical, and the number of flags raised is reduced by a very large margin.  It is also important to note that many of the alerts do not take into account the fact that The Bank of Privacy runs over HTTPS, which is bypassed by ZAP via proxy in order to ensure that its data can be transmitted to and from the application without interruptions due to security protocols.
+
+![](images/secure_results.png)
 
 ## Security Vulnerability Exploit Attacks
 
@@ -240,15 +266,17 @@ b358486187ed10ab2ba622e449f664a72d3453e2:Reds
 
 The attacker has the passwords to every customer in the Bank of Piracy and can break into their accounts effortlessly.
 
-<a name="dataexp-mit"/>
-
-### Sensitive Data Exposure
-
 <a name="access-attack"/>
 
 ### Broken Access Control
 
-The Bank of Piracy leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. 
+The Bank of Piracy leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. For example, a user must normally enter their credentials on a login page in order to gain access to the dashboard.  The unsecure application, however, will allow a user to manually change the url so that they can not only reach their dashboard, but also the dashboard of any other user in the system.  The Bank of Piracy passes the user id of the customer as a URL parameter, which means than anyone can change the id in the URL and gain access to another account.  
+
+Broken Access Control can also be achieved through the use of the OWASP ZAP tool, which acts as a proxy between the client and server and can interrupt the transmission of data between the two.  The Bank of Piracy runs over standard HTTP, and is not afforded any extra protection for data being tranferred to and from the website.  HTTP interception can be simulated through the OWASP ZAP HUD, which is accessible through the use of the manual explore function.  The images below depict the HTTP interception of the server's response to a user's login request.  The user's username and password are posted to the server, which queries the database in order to be able to verify whether or not the input from the front-end matches the data stored on the back-end.  When the user is validated, the server responds with the user's id, which can then be passed to the next page on the front-end so that the proper data can be requested for rendering.
+
+![](images/http_post.png)
+
+![](images/http_response.png)
 
 <a name="xss-attack"/>
 
