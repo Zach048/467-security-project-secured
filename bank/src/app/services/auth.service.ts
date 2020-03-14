@@ -7,9 +7,9 @@ export class AuthService {
 
   constructor() { }
 
+  //Sets 'isLoggedOut' to false and removes user's token from local storage
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
-    localStorage.setItem('isValidUser', 'false');
     localStorage.removeItem('token');
   }
 }

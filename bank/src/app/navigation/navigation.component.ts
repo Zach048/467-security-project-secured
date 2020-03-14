@@ -17,6 +17,7 @@ export class NavigationComponent implements OnInit {
     this.id = localStorage.getItem('token');
   }
 
+  //Remove session token to prevent user from accessing site after logging out
   logout() {
     this.authService.logout();
   }

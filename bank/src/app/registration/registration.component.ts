@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 export class RegistrationComponent implements OnInit {
   public customer = {};
 
+  //New user registration form with validators to control form reactions
   registrationForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
     lastName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
@@ -31,10 +32,13 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private authService: AuthService, private _registrationService: RegistrationService, private router: Router) { }
 
+  //Make sure no user is currently logged in when accessing the form
   ngOnInit() {
     this.authService.logout();
   }
 
+  //Toggles between plaintext and password for the password field on the form
+  //Controlled by checkbox underneath the password field on the form
   showPassword() {
     let x : any = document.getElementById("pword");
     if (x.type === "password") {
@@ -44,6 +48,8 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  //Toggles between plaintext and password for the username field on the form
+  //Controlled by checkbox underneath the username field on the form
   showUsername() {
     let x : any = document.getElementById("uname");
     if (x.type === "password") {
@@ -53,12 +59,14 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  //Loop through form values to populate customer object
   updateCustomer() {
     for (let key in this.registrationForm.value) {
       this.customer[key] = this.registrationForm.value[key];
     }
   }
 
+  //Submit registration form values to the back-end for entry into database
   onSubmit(){
     this.updateCustomer()
     console.log(this.customer);

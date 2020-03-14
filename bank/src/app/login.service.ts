@@ -15,14 +15,17 @@ export class LoginService {
   
   constructor(private _http: HttpClient) { }
 
+  //Get current user's id
   getCustomerId(id: String) {
     this.customerId.next(id)
   }
 
+  //Send username and password to back-end for authentication
   login(userData, userName){
     return this._http.post<any>(this._login_url+userName, userData, this.httpOptions);
   }
 
+  //Register the username and password in the database
   register(userData, userName){
     return this._http.post<any>(this._register_url+userName, userData, this.httpOptions);
   }

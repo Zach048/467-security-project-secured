@@ -27,6 +27,7 @@ export class CreditcardComponent implements OnInit {
 
   constructor(private _accountService: AccountService, private _paymentService: PaymentService, private router: Router) { }
 
+  //subscribe to user's accound information so that it can be rendered when page is loaded
   ngOnInit() {
     this._accountService.getAccount()
       .subscribe(data => {
@@ -48,6 +49,7 @@ export class CreditcardComponent implements OnInit {
       });
   }
 
+  //Ensure that user has entered a valid payment
   validatePayment(num: number){
     if(num == null){
       alert("Invalid Payment Type!");
@@ -76,15 +78,20 @@ export class CreditcardComponent implements OnInit {
       return true;
     }
   }
-
+  
+  //Validate user credit card payment and submit it to the back end
+  //Subscribe to response from back end and log success/error to the console
   onSubmit(){
+    //make sure form is only submitted once
     if(this.submitted){
       return false;
     }
     this.credPay = this.creditForm.value.creditCardPayment;
     if(this.validatePayment(this.credPay)){
+      //hide button and disable form to prevent duplicate submissions
       this.hideButton = true;
       this.creditForm.disable();
+      //submit payment to back-end and capture response
       this._paymentService.register(this._url+this.credPay, this.account)
         .subscribe(
           response => console.log('Successfully submitted credit card payment', response),

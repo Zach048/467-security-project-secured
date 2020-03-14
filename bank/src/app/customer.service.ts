@@ -16,7 +16,8 @@ export class CustomerService {
   constructor(private http: HttpClient, private login: LoginService) { 
     this.login.currentId.subscribe(customerId => this.customerId = customerId)
   }
-
+  
+  //Get account information associated with the current user id
   getCustomer(): Observable<ICustomer>{
     console.log(this.customerId);
     return this.http.get<ICustomer>(this._url+this.customerId);

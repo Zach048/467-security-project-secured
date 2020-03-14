@@ -12,6 +12,7 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private _transactionsService: TransactionsService) { }
 
+  //Subscribe to the transactions service to populate the list of user's transactions
   ngOnInit() {
     this._transactionsService.getTransactions()
       .subscribe(data => this.transactions = data);

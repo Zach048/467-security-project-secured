@@ -1,5 +1,10 @@
+/*
+Reference: https://codinglatte.com/posts/angular/cool-password-validation-angular/
+*/
+
 import { ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 
+//Reactive validators for use with the new user registration form
 export class CustomValidators {
    static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
       return (control: AbstractControl): { [key: string]: any } => {

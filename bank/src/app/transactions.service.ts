@@ -16,6 +16,7 @@ export class TransactionsService {
       this.login.currentId.subscribe(customerId => this.customerId = customerId)
     }
   
+    //Get transaction information associated with the current user id
     getTransactions(): Observable<ITransactions[]>{
       return this.http.get<ITransactions[]>(this._url+this.customerId);
     }

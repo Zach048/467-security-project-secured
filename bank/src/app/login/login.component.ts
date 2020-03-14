@@ -21,14 +21,17 @@ export class LoginComponent implements OnInit {
 
   public customerId: number;
 
+  //When page is initially rendered make sure no user is currently logged in
   ngOnInit() {
     this.authService.logout();
   }
 
+  //Submit username and password to the back-end for authentication
   onSubmit(){
       this.form = this.loginForm;
       this._loginService.login(this.form.value['password'], this.form.value['username'])
       .subscribe((customerId: any) => {
+        //Save customer Id if login is authenticated
         if(<number>customerId != -1) {
           this.customerId = customerId;
           localStorage.setItem('customerId', String(this.customerId));
@@ -37,6 +40,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', this.form.value['username']);
           this.router.navigate(['/dashboard']);
         }
+        //Alert user that their credentials are invalid and route back to login screen
         else{
           alert("Invalid username, password, or combination!");
           this.router.navigate(['/']);
@@ -44,6 +48,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  //Route to navigate to new user registration form
   register(){
     this.router.navigate(['/registration']);
   }

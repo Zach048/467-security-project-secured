@@ -16,6 +16,7 @@ export class AccountService {
     this.login.currentId.subscribe(customerId => this.customerId = customerId)
   }
   
+  //Get account information associated with the current user id
   getAccount(): Observable<IAccount>{
     return this.http.get<IAccount>(this._url+this.customerId);
   }

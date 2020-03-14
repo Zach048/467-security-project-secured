@@ -33,11 +33,14 @@ export class PersonalComponent implements OnInit {
 
   constructor(private _loginService: LoginService, private _customerService: CustomerService, private _registrationService: RegistrationService, private router: Router) { }
 
+  //Subscribe to user's personal information to prepopulate the form
   ngOnInit() {
     this._customerService.getCustomer()
       .subscribe(data => this.customer = data);
   }
  
+  //Toggles between plaintext and password for the password field on the form
+  //Controlled by checkbox underneath the password field on the form
   showPassword() {
     let x : any = document.getElementById("pword");
     if (x.type === "password") {
@@ -47,6 +50,8 @@ export class PersonalComponent implements OnInit {
     }
   }
 
+  //Toggles between plaintext and password for the username field on the form
+  //Controlled by checkbox underneath the username field on the form
   showUsername() {
     let x : any = document.getElementById("uname");
     if (x.type === "password") {
@@ -56,12 +61,15 @@ export class PersonalComponent implements OnInit {
     }
   }
 
+  //Loop through form fields to populate customer object
   updateCustomer() {
     for (let key in this.personalForm.value) {
+      //Password update is not required, convert to null if not updating
       if(key == "password"){
         if(this.personalForm.value[key] == ""){
           this.customer[key] = null;
         }
+        //Otherwise update password with the value from the form
         else{
           this.customer[key] = this.personalForm.value[key];
         }
@@ -72,25 +80,30 @@ export class PersonalComponent implements OnInit {
     }
   }
 
+  //Verify user's username and password before granting access to the personal form
   verify(){
     this._loginService.login(this.loginForm.value['password'], this.loginForm.value['username'])
       .subscribe((customerId: any) => {
         if(<number>customerId != -1) {
           this.customerId = <string>customerId;
+          //Verify that user's id matches the id associated with the current session
           if(this.customerId == localStorage.getItem('customerId')){
             this.showVerification = false;
             this.showPersonal = true;
           }
           else{
+            //Credentials match another user, not the current user
             alert("Credentials Do Not Match Current Account!");
           }
         }
         else{
+          //Credentials are invalid
           alert("Invalid Username, Password, or Combination!");
         }
       });
   }
 
+  //Submit the personal form to the back-end for entry into database
   onSubmit(){
     this.hideButton = true;
     this.updateCustomer()

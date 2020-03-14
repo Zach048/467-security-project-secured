@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private _customerService: CustomerService, private _accountService: AccountService) { }
 
+  //subscribe to user's personal and account information to populate the page
   ngOnInit() {
     /*
     setTimeout (() => {
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
     this._accountService.getAccount()
       .subscribe(data => {
         this.account = data
+        //hide the user's checking account and credit card numbers using asterisks
         for (let key in this.account) {
           if(key == "checkingAccount" || key == "creditCard"){
             this.account[key] = this.account[key].replace(/\d(?=\d{4})/g, "*");
