@@ -1,6 +1,6 @@
 # 467-security-project
 
-## To Run Back-End Server:
+## To Run Back-End Server Locally:
 
 1. Pull code from GitHub
 2. Download Eclipse
@@ -18,7 +18,7 @@
 6. Right click unsecure 
    - Run As Spring Boot App
 
-## To Run Front-End Angular Project:
+## To Run Front-End Angular Project Locally:
 
 1. Make sure you have pulled code from GitHub
 2. Download Angular CLI: https://cli.angular.io
