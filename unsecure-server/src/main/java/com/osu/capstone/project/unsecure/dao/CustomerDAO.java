@@ -202,10 +202,50 @@ public class CustomerDAO {
 //				rs.getString("password")
 //				)
 //		);
+		
+		System.out.println("customer.getPassword() = " + customer.getPassword());
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CustomerRecord c = (CustomerRecord)entityManager.getReference(CustomerRecord.class, customer.getCustomerId());
+		System.out.println("customer.getPassword() = " + customer.getPassword());
+		System.out.println("c.getPassword() = " + c.getPassword());
+		if(customer.getPassword() != null) {
+			System.out.println("hashing password...");
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String hashedPassword = passwordEncoder.encode(customer.getPassword());
+			System.out.println("hashedPassword() = " + hashedPassword);
+			c.setUserName(customer.getUserName());
+			c.setFirstName(customer.getFirstName());
+			c.setLastName(customer.getLastName());
+			c.setEmail(customer.getEmail());
+			c.setPhone(customer.getPhone());
+			c.setPassword(hashedPassword);
+			System.out.println("c.getPassword = " + c.getPassword());
+			entityManager.getTransaction().begin();
+			entityManager.merge(c);
+			entityManager.getTransaction().commit();
+		}
+		else {
+			c.setUserName(customer.getUserName());
+			c.setFirstName(customer.getFirstName());
+			c.setLastName(customer.getLastName());
+			c.setEmail(customer.getEmail());
+			c.setPhone(customer.getPhone());
+			entityManager.getTransaction().begin();
+			entityManager.merge(c);
+			entityManager.getTransaction().commit();
+		}
+		entityManager.close();
+		}
+		
+		
+		
+		/*
+=======
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		CustomerRecord c = (CustomerRecord)entityManager.getReference(CustomerRecord.class, customer.getCustomerId());
 		String currentPassword = c.getPassword();
 		System.out.println("Current password: " + c.getPassword());
+>>>>>>> a18bccbb1014acc1e0739852ef44c226f6658797
 		//only update customer information if the password entered is correct
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		System.out.println("Initialize Bcrypt");
@@ -247,6 +287,7 @@ public class CustomerDAO {
 		}
 		entityManager.close();
 	}
-	
+<<<<<<< HEAD
+	*/
 
 }

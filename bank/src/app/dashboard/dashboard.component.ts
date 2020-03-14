@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { AccountService } from '../account.service';
-//import { MatDialog } from '@angular/material';
-//import { CreditcardComponent } from '../creditcard/creditcard.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +10,21 @@ import { AccountService } from '../account.service';
 export class DashboardComponent implements OnInit {
   public customer = {};
   public account = {};
+  public show = false;
 
-  constructor(private _customerService: CustomerService, private _accountService: AccountService/*, public dialog: MatDialog*/) { }
+  constructor(private _customerService: CustomerService, private _accountService: AccountService) { }
 
   ngOnInit() {
+    /*
+    setTimeout (() => {
+      this._customerService.getCustomer()
+        .subscribe(data => this.customer = data);
+      this.show = true;
+    }, 500);
+    */
+   this.show = true;
     this._customerService.getCustomer()
-      .subscribe(data => this.customer = data);
+        .subscribe(data => this.customer = data);
     this._accountService.getAccount()
       .subscribe(data => {
         this.account = data
@@ -28,13 +35,4 @@ export class DashboardComponent implements OnInit {
         }
       });
   }
-/*
-  creditModal(){
-    let dialogRef = this.dialog.open(CreditcardComponent, {data: this.account});
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog Result: ${result}`);
-    });
-  }
-*/
 }

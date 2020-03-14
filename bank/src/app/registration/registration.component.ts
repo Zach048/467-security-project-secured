@@ -3,6 +3,7 @@ import { RegistrationService } from '../registration.service';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../custom-validators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -13,13 +14,14 @@ export class RegistrationComponent implements OnInit {
   public customer = {};
 
   registrationForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.email, Validators.required]),
-    phone: new FormControl('', Validators.required),
-    userName: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    firstName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    lastName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    email: new FormControl('', [Validators.email, Validators.required, Validators.maxLength(30)]),
+    phone: new FormControl('', [Validators.required, Validators.maxLength(15)]),
+    userName: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]),
     password: new FormControl('', [Validators.required,
-                                   Validators.minLength(8), 
+                                   Validators.minLength(8),
+                                   Validators.maxLength(25), 
                                    CustomValidators.patternValidator(/\d/, { hasNumber: true }),
                                    CustomValidators.patternValidator(/[A-Z]/, { hasUpperCase: true }),
                                    CustomValidators.patternValidator(/[a-z]/, { hasLowerCase: true }),
@@ -27,9 +29,10 @@ export class RegistrationComponent implements OnInit {
      ])
   });
 
-  constructor(private _registrationService: RegistrationService, private router: Router) { }
+  constructor(private authService: AuthService, private _registrationService: RegistrationService, private router: Router) { }
 
   ngOnInit() {
+    this.authService.logout();
   }
 
   showPassword() {

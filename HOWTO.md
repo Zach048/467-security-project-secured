@@ -14,28 +14,34 @@
 [Using Components With Known Vulnerabilities](#known-vulnerabilities)  
 [Insufficient Logging and Monitoring](#logging)
 
-##### II. Scanning For Security Vulnerabilities
+##### II. Introducing the Bank of Piracy / The Bank of Privacy
+
+[The Bank of Piracy](#unsecure)  
+[The Bank of Privacy](#secure)
+
+##### III. Scanning For Security Vulnerabilities
 
 [Introduction to OWASP ZAP](#zap)  
-[Results](#results)
+[Results: The Bank of Piracy](#unsecureResults)  
+[Results: The Bank of Privacy](#secureResults)
 
-##### III. Security Vulnerability Exploit Attacks   
+##### IV. Security Vulnerability Exploit Attacks   
 
 [Cross Scripting Attack](#xss-attack)  
 [SQL Code Injection](#injection-attack)  
 [Broken Authentication](#passwords-attack)  
 [Broken Access Control](#access-attack)  
 
-##### IV. Security Vulnerability Mitigations  
+##### V. Security Vulnerability Mitigations  
 
-[Cross Scripting Attack](#xss-mit)
-[SQL Code Injection](#injection-mit)  
+[SQL Code Injection](#injection-mit)   
 [Broken Authentication](#encryption-mit)  
-[Broken Access Control](#access-mit)  
-[Logging](#logging-mit)  
-[Security Misconfiguration](#misconfig-mit)  
 [Sensitive Data Exposure](#dataexp-mit)  
-[Using Components with Known Vulnerabilities](#outdated-mit)
+[Broken Access Control](#access-mit)  
+[Security Misconfiguration](#misconfig-mit)  
+[Cross-Site Scripting (XSS)](#xss-mit)  
+[Using Components with Known Vulnerabilities](#outdated-mit)  
+[Insufficient Logging and Monitoring](#logging-mit)
 
 ## Defining Security Vulnerabilites
 
@@ -103,6 +109,20 @@ Some attacks may penetrate even the best security defenses, but a proper securit
 
 [OWASP Insufficient Logging and Monitoring](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A10-Insufficient_Logging%252526Monitoring.html)
 
+## The Bank of Piracy / The Bank of Privacy
+
+<a name="unsecure"/>
+
+### Bank of Piracy
+
+The Bank of Piracy is the unsecure version of the application.  The front-end of the application uses HTML and CSS in conjunction with Express Framework to deliver the user an interactive online bank account.  The back-end of the application is a Node.js server combined with a MySQL relational database.  There are user accounts stored in the database with user authentication via the login page and the user can input data to pay their credit card bill, update the personal information on their account, or search their list of transactions for a specific vendor.  All data are stored in the database in plaintext with the exception of passwords, which are encrypted for storage in the database using SHA1, a cryptographic hash function that takes a plaintext input and generates a 160-bit hash value that is rendered as a 40-digit hexadecimal number.  Use of SHA1 is no longer recommended due to its associated vulnerabilities, but hash functions can provide a false sense of security simply because they are not supposed to be unhashable.
+
+<a name="secure"/>
+
+### Bank of Privacy
+
+The Bank of Privacy is the secure version of the application.  The front-end of the application is written in TypeScript, HTML, and CSS through Angular, an open-source framework for web applications originally developed and maintained by Google.  The back-end of the application...
+
 ## Scanning For Security Vulnerabilities
 
 <a name="zap"/>
@@ -113,9 +133,13 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 [About ZAP and Instructions for Use](https://www.zaproxy.org/getting-started/)
 
-<a name="results"/>
+<a name="unsecureResults"/>
 
-### OWASP Zap Scanning Results
+### OWASP Zap Scanning Results: Bank of Piracy
+
+<a name="secureResults"/>
+
+### OWASP Zap Scanning Results: Bank of Privacy
 
 
 ## Security Vulnerability Exploit Attacks
@@ -136,9 +160,7 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### Broken Access Control
 
-<a name="misconfig-mit"/>
-
-### Security Misconfiguration  
+The Bank of Piracy leaves user data at risk by failing to protect against account access by unauthorized users.  There is no explicit protection for any of the application's routes, which means that all routes associated with the application can be accessed by anyone via URL.  Although there is a login page to verify a username and password combination, it can easily be bypassed by manually changing the route in the URL. 
 
 <a name="xss-attack"/>
 
@@ -162,9 +184,23 @@ The Open Web Application Security Project (OWASP) is a nonprofit working to adva
 
 ### Broken Authentication
 
+On the back-end of the application the password is encrypted using Bcrypt, a one-way slow hashing method that takes a plaintext password and hashes it with salt, a unique random string added to the password prior to hashing, in ordered to further obfuscate the password and protect against rainbow table attacks.  The one-way nature of Bcrypt's password hashing means that password verification is completed by hashing the user-entered password and checking if it is a match for the hashed password stored in the database rather than decrypting the password stored in the database and seeing if it matches the user-entered plaintext value.
+
+<a name="dataexp-mit"/> 
+
+### Sensitive Data Exposure
+
+The Bank of Privacy employs methods on the front-end, back-end, and in between to protect sensitive data from exposure to risk.  On the front-end the user is only shown the last four digits of their account number and credit card, which is just enough information to verify that they are correct but not enough to leave the user at risk if someone should gain unauthorized access to the account.  The user has the ability to hide their username and password in their respective fields on the personal information update form so that they are indiscernible to the naked eye.  Data passed between the front and back-end of the application has increased protection through Hypertext Transfer Protocol Secure (HTTPS), an extension of HTTP that utilizes Transport Layer Security (TLS) to employ cryptographic protocols for secure communications over a computer network.  HTTPS relies on the use of certificates to authenticate the site being accessed, verifies a secure connection between the client and server through symmetric cryptography, and provides a secure data pipeline between the two through bidirectional encryption of communications.  These protocols assist in protecting against man-in-the-middle attacks, eavesdropping, and interference with communications, and there is little to no support from browsers when attempting to achieve these results with standard HTTP.  The data is stored in the database when it reaches the back-end, and once the password is entered it never gets decrypted, meaning there is very little risk that the password will be cracked without severe involvement.
+
 <a name="access-mit"/>
 
 ### Broken Access Control
+
+The Bank of Privacy uses sessions in order to prevent accounts from being accessed without authorization.  Additionally, routes in the application do not employ the use of parameters to pass the user id to one another, thereby adding an additional layer of protection against broken access to user data. The login page and new user registration page are accessible without the creation of a session, which occurs after a user enters a correct username and password combination to log into an account.  Once logged into an account, a user can access the dashboard, view their transactions, pay their credit card bill, and update their personal information.  When a user logs out of the account, the session is terminated and the user must present their credentials again in order to regain access to the pages beyond the login screen.  The new user registration page is meant to be accessed from a button on the login page but can also be accessed directly via URL, so when the page is loaded it automatically makes sure that there is no current session in order to prevent the possible contamination of data submitted in the form.
+
+<a name="misconfig-mit"/>
+
+### Security Misconfiguration  
 
 <a name="xss-mit"/>
 

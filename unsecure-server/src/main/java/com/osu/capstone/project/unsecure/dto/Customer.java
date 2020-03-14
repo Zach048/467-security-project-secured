@@ -19,7 +19,6 @@ public class Customer {
 	private String lastName;
 	private String email;
 	private String phone;
-	private String new_password;
 	
 	public Customer(CustomerRecord customer) {
 		this.customerId = customer.getCustomerId();
@@ -96,13 +95,5 @@ public class Customer {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	
-	public String getNewPassword() {
-		return new_password;
-	}
-
-	public void setNewPassword(String new_password) {
-		this.new_password = new_password;
 	}
 }
