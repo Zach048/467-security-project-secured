@@ -1,54 +1,52 @@
 #
 # TABLE STRUCTURE FOR: customer
 #
-
+DROP TABLE IF EXISTS `transactions`;
+DROP TABLE IF EXISTS `account`;
 DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_name` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_email` (`email`),
   UNIQUE KEY `unique_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (1, 'Cristobal', 'Goyette', 'ullrich.mallory@example.net', '1-234-141-3', SHA1('rdduhndu3627'), 'lucienne.fadel');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (2, 'Rachelle', 'Kessler', 'hfeeney@example.net', '+60(3)61285', SHA1('mtajfzeh4819'), 'ykiehn');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (3, 'Gilbert', 'Casper', 'macy.bruen@example.org', '+03(0)61135', SHA1('rvdurxhb7563'), 'pgottlieb');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (4, 'Florencio', 'Kuhlman', 'haley.d\'amore@example.com', '793-834-504', SHA1('uryjuhyn4953'), 'hazle.kshlerin');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (5, 'Cali', 'Batz', 'fmitchell@example.org', '(876)745-31', SHA1('xptxhbey0232'), 'bo29');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (6, 'Brook', 'Kuvalis', 'ellen64@example.net', '+93(8)55223', SHA1('uporckgi8329'), 'roderick.connelly');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (7, 'Antwon', 'Kiehn', 'juvenal.waters@example.org', '1-476-534-3', SHA1('oxljlcxh4644'), 'llemke');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (8, 'Vivien', 'VonRueden', 'lucienne.torp@example.org', '(842)847-58', SHA1('qzppocks9131'), 'vsenger');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (9, 'Bria', 'Turner', 'ewell22@example.org', '+25(0)39634', SHA1('ihmtmfpi7338'), 'orval.mills');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (10, 'Emely', 'Bradtke', 'turner.mireille@example.com', '(240)012-43', SHA1('zgerddyh8238'), 'dexter.krajcik');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (11, 'Maxwell', 'Nader', 'payton32@example.org', '(731)804-11', SHA1('rjdpnjcj5460'), 'cole.reichert');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (12, 'Deshaun', 'Hills', 'anabel.willms@example.com', '00202439340', SHA1('aoszocqu4625'), 'ismith');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (13, 'Arjun', 'Hahn', 'blanda.ulises@example.org', '(906)106-92', SHA1('nacxufaf8855'), 'lkovacek');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (14, 'Enrique', 'Lang', 'kevon98@example.net', '286-925-839', SHA1('mntsfusr6947'), 'moen.kailee');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (15, 'Wilburn', 'Franecki', 'hyatt.noemie@example.com', '662.358.683', SHA1('szmuqquj1051'), 'fwindler');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (16, 'Curtis', 'Powlowski', 'barton.kira@example.com', '299.097.700', SHA1('kfmsguso9415'), 'abernathy.merle');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (17, 'Ray', 'Rutherford', 'ruthe84@example.net', '483-971-735', SHA1('whnjluop7797'), 'd\'amore.jadon');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (18, 'Jennyfer', 'Mitchell', 'colleen05@example.com', '396.623.387', SHA1('wzwatgbo6718'), 'emilia.mosciski');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (19, 'Jed', 'Mohr', 'tania58@example.com', '1-891-515-6', SHA1('aoeunsfe3983'), 'beatty.coby');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (20, 'Wilbert', 'Crona', 'xkshlerin@example.net', '476-007-657', SHA1('ljmupplv8194'), 'koch.camron');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (21, 'Greta', 'Pagac', 'ruthie54@example.org', '893-332-845', SHA1('hrizzags8701'), 'nbernhard');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (22, 'Ethelyn', 'Kunze', 'haley.esperanza@example.net', '04654134880', SHA1('cszglkbm8223'), 'cathrine41');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (23, 'Magdalena', 'Okuneva', 'ahand@example.org', '08289344167', SHA1('kqilcvxw8330'), 'hertha81');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (24, 'Jarrett', 'Crona', 'yrempel@example.org', '1-945-369-1', SHA1('jvxtdwuj4610'), 'erenner');
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (25, 'Shemar', 'Turner', 'anderson61@example.org', '369.900.567', SHA1('csdamrux5692'), 'tyrese68');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (1, 'Cristobal', 'Goyette', 'ullrich.mallory@example.net', '1-234-141-3', 'password', 'lucienne.fadel');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (2, 'Rachelle', 'Kessler', 'hfeeney@example.net', '+60(3)61285', '123456', 'ykiehn');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (3, 'Gilbert', 'Casper', 'macy.bruen@example.org', '+03(0)61135', 'blueberry', 'pgottlieb');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (4, 'Florencio', 'Kuhlman', 'haley.d' 'amore@example.com', '793-834-504', 'HangOver', 'hazle.kshlerin');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (5, 'Cali', 'Batz', 'fmitchell@example.org', '(876)745-31', 'Patriots', 'bo29');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (6, 'Brook', 'Kuvalis', 'ellen64@example.net', '+93(8)55223', 'Steelers', 'roderick.connelly');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (7, 'Antwon', 'Kiehn', 'juvenal.waters@example.org', '1-476-534-3', 'Reds', 'llemke');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (8, 'Vivien', 'VonRueden', 'lucienne.torp@example.org', '(842)847-58', 'buckeyes', 'vsenger');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (9, 'Bria', 'Turner', 'ewell22@example.org', '+25(0)39634', 'tombrady12', 'orval.mills');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (10, 'Emely', 'Bradtke', 'turner.mireille@example.com', '(240)012-43', 'john', 'dexter.krajcik');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (11, 'Maxwell', 'Nader', 'payton32@example.org', '(731)804-11', 'September24', 'cole.reichert');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (12, 'Deshaun', 'Hills', 'anabel.willms@example.com', '00202439340', 'Scarface', 'ismith');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (13, 'Arjun', 'Hahn', 'blanda.ulises@example.org', '(906)106-92', 'chicagobulls23', 'lkovacek');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (14, 'Enrique', 'Lang', 'kevon98@example.net', '286-925-839', 'password123', 'moen.kailee');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (15, 'Wilburn', 'Franecki', 'hyatt.noemie@example.com', '662.358.683', 'penguins', 'fwindler');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (16, 'Curtis', 'Powlowski', 'barton.kira@example.com', '299.097.700', 'kingjames23', 'abernathy.merle');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (17, 'Ray', 'Rutherford', 'ruthe84@example.net', '483-971-735', 'kobebryant', 'd\'amore.jadon');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (18, 'Jennyfer', 'Mitchell', 'colleen05@example.com', '396.623.387', 'ferrari', 'emilia.mosciski');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (19, 'Jed', 'Mohr', 'tania58@example.com', '1-891-515-6', 'zachary', 'beatty.coby');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (20, 'Wilbert', 'Crona', 'xkshlerin@example.net', '476-007-657', 'NinjaTurtles', 'koch.camron');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (21, 'Greta', 'Pagac', 'ruthie54@example.org', '893-332-845', 'therock34', 'nbernhard');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (22, 'Ethelyn', 'Kunze', 'haley.esperanza@example.net', '04654134880', 'iamtoocool', 'cathrine41');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (23, 'Magdalena', 'Okuneva', 'ahand@example.org', '08289344167', 'pizza', 'hertha81');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (24, 'Jarrett', 'Crona', 'yrempel@example.org', '1-945-369-1', 'apple', 'erenner');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES (25, 'Shemar', 'Turner', 'anderson61@example.org', '369.900.567', 'dolphins13', 'tyrese68');
 
 
 #
 # TABLE STRUCTURE FOR: account
 #
-
-DROP TABLE IF EXISTS `account`;
 
 CREATE TABLE `account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,30 +61,30 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (1, '833432104', '5409260775961432', '93.97', '77.05', 1);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (2, '212952457', '5374329778806412', '87400.27', '83582692.00', 2);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (3, '663059504', '5533384397927947', '50187041.99', '153322549.15', 3);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (4, '908392509', '4716600120073335', '219.42', '9825940.10', 4);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (5, '351241862', '4929858510901', '23391.56', '2959243.93', 5);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (2, '212952457', '5374329778806412', '87400.27', '83582.00', 2);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (3, '663059504', '5533384397927947', '50187041.99', '15332.15', 3);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (4, '908392509', '4716600120073335', '219.42', '9825.10', 4);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (5, '351241862', '4929858510901', '231.56', '2959.93', 5);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (6, '920712325', '5298910076295334', '95.50', '92.89', 6);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (7, '270261686', '6011273581443085', '86.00', '196733.21', 7);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (8, '166785774', '4916753951387', '117664.97', '3942143.68', 8);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (7, '270261686', '6011273581443085', '86.00', '1967.21', 7);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (8, '166785774', '4916753951387', '11764.97', '3942.68', 8);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (9, '211023671', '5350711241232040', '21.00', '92.28', 9);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (10, '501206842', '5559275322956539', '40964427.61', '13.75', 10);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (10, '501206842', '5559275322956539', '4096.61', '13.75', 10);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (11, '491073761', '4532546061458', '48.60', '462.67', 11);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (12, '867294022', '5580264641395116', '42.30', '1723852.69', 12);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (12, '867294022', '5580264641395116', '42.30', '17238.69', 12);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (13, '666719717', '6011470361188836', '99.45', '97.51', 13);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (14, '921983901', '4916231088399211', '27.00', '406.90', 14);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (15, '747278489', '4556412929500841', '2555.02', '67.78', 15);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (16, '507198738', '5593146204691255', '93.47', '3983.62', 16);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (17, '744377342', '5437036352203078', '806.19', '99879697.43', 17);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (16, '507198738', '5593146204691255', '93.47', '393.62', 16);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (17, '744377342', '5437036352203078', '806.19', '99877.43', 17);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (18, '157568550', '5121787126601862', '14.70', '4529.64', 18);
 INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (19, '661195068', '4539140567004636', '6.50', '92.79', 19);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (20, '895328751', '4539877151164', '416129.76', '117996.31', 20);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (21, '536802807', '5376002861786739', '35173.11', '2481705.86', 21);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (22, '257709648', '4532950081276967', '96.46', '266318399.80', 22);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (23, '333892586', '4532816264478', '1403053.65', '6033.02', 23);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (24, '699515972', '4929943298190', '69489.67', '30592668.00', 24);
-INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (25, '402538425', '4024007149656', '3168246.85', '74616.76', 25);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (20, '895328751', '4539877151164', '4129.76', '1196.31', 20);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (21, '536802807', '5376002861786739', '353.11', '24805.86', 21);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (22, '257709648', '4532950081276967', '96.46', '26639.80', 22);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (23, '333892586', '4532816264478', '14053.65', '6033.02', 23);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (24, '699515972', '4929943298190', '6949.67', '30592.00', 24);
+INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balance`, `credit_card_balance`, `customer_id`) VALUES (25, '402538425', '4024007149656', '3166.85', '7461.76', 25);
 
 
 
@@ -95,7 +93,6 @@ INSERT INTO `account` (`id`, `checking_account`, `credit_card`, `checking_balanc
 # TABLE STRUCTURE FOR: transactions
 #
 
-DROP TABLE IF EXISTS `transactions`;
 
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -207,5 +204,3 @@ INSERT INTO `transactions` (`id`, `vendor_name`, `amount_paid`, `account_id`) VA
 INSERT INTO `transactions` (`id`, `vendor_name`, `amount_paid`, `account_id`) VALUES (98, 'O\'Connell Inc', '3448881.00', 23);
 INSERT INTO `transactions` (`id`, `vendor_name`, `amount_paid`, `account_id`) VALUES (99, 'Marquardt-Schinner', '339436.43', 24);
 INSERT INTO `transactions` (`id`, `vendor_name`, `amount_paid`, `account_id`) VALUES (100, 'Runolfsdottir-Spencer', '16562282.27', 25);
-
-
